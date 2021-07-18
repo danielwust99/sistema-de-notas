@@ -28,7 +28,6 @@ export default class App {
         this.#express.use(cors());
         this.#express.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow", "*");
             next();
         });
     }
@@ -41,6 +40,11 @@ export default class App {
 
         this.#express.use(usersRoutes);
         this.#express.use(notesRoutes);
+        this.#express.use(cors());
+        this.#express.use((req, res, next) => {
+            res.header("Access-Control-Allow-Origin", "*");
+            next();
+        });
     }
 
     public start(port: any) {
