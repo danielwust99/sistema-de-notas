@@ -23,8 +23,6 @@ async function listarNotas() {
     const { data } = await axios(`/notas/${sessao.uid}/todas/`, {
         headers: {
             authorization: "Bearer " + sessao.token,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "Content-Type"
         },
     });
 
@@ -56,8 +54,6 @@ async function inserirNota() {
         {
             headers: {
                 authorization: "Bearer " + sessao.token,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Content-Type"
             },
         }
     );
@@ -85,8 +81,6 @@ async function editarNota(who) {
     const { data } = await axios(`/notas/${who}`, {
         headers: {
             authorization: "Bearer " + sessao.token,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "Content-Type"
         },
     });
 
@@ -114,8 +108,6 @@ async function salvarNota(who) {
         {
             headers: {
                 authorization: "Bearer " + sessao.token,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Content-Type"
             },
         }
     );
