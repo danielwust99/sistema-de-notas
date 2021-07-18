@@ -16,7 +16,7 @@ sessao = JSON.parse(localStorage.sessao);
 
 if (sessao.token) {
     alertLogin.innerHTML = `${alertPrimary} Usuario já logado, redirecionando </div>`;
-    window.setTimeout(redirecionamento(), 50000);
+    window.setTimeout(redirecionamento(), 5000);
 }
 
 async function criarConta(event) {
@@ -54,7 +54,7 @@ async function efetuarLogin(event) {
 
     if (data.token !== "null") {
         alertLogin.innerHTML = `${alertPrimary} Login Efetuado, redirecionando </div>`;
-        window.setTimeout(redirecionamento(), 50000);
+        window.setTimeout(redirecionamento(), 2500);
     }
 }
 
