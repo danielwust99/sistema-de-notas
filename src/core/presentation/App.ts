@@ -26,13 +26,15 @@ export default class App {
         this.#express.use(express.json());
         this.#express.use(express.urlencoded({ extended: false }));
         this.#express.use(cors());
+    }
+
+    public middlewares() {
+        this.#express.use(cors());
         this.#express.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
             next();
         });
     }
-
-    public middlewares() {}
 
     public routes() {
         const usersRoutes = new UsersRoutes().init();
@@ -41,10 +43,6 @@ export default class App {
         this.#express.use(usersRoutes);
         this.#express.use(notesRoutes);
         this.#express.use(cors());
-        this.#express.use((req, res, next) => {
-            res.header("Access-Control-Allow-Origin", "*");
-            next();
-        });
     }
 
     public start(port: any) {
