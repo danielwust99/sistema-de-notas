@@ -1,0 +1,35 @@
+{
+    "name": "sistema-de-notas",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/cors": "^2.8.10",
+        "@types/express": "^4.17.12",
+        "@types/jsonwebtoken": "^8.5.4",
+        "@types/node": "^16.0.0",
+        "@types/uuid": "^8.3.1",
+        "ts-node-dev": "^1.1.8"
+    },
+    "dependencies": {
+        "@types/bcrypt": "^5.0.0",
+        "bcrypt": "^5.0.1",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "install": "^0.13.0",
+        "jsonwebtoken": "^8.5.1",
+        "pg": "^8.6.0",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.2.34",
+        "typescript": "^4.2.4",
+        "uuid": "^8.3.2"
+    },
+    "scripts": {
+        "dev": "ts-node-dev --respawn --transpile-only --files ./src/server.ts",
+        "migration:run": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js migration:run",
+        "migration:revert": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js migration:revert",
+        "start": "node -r dotenv/config ./out/server",
+        "build": "npx tsc"
+    }
+}
