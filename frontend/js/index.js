@@ -24,9 +24,6 @@ async function listarNotas() {
         },
     });
 
-    data.sort()
-    console.log(data);
-
     for (let nota of data) {
         let horaNC = nota.updatedAt.slice(0, 10);
         let horaC = horaNC.split("-").reverse().join("/");
