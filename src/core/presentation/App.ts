@@ -31,15 +31,10 @@ export default class App {
     public middlewares() {
         this.#express.use(cors());
         this.#express.use((req, res, next) => {
-            res.header(
-                "Access-Control-Allow-Origin",
-                "https://sistema-de-notas-front.herokuapp.com"
-            );
-            if ("OPTIONS" == req.method) {
-                res.send(200);
-            } else {
-                next();
-            }
+            res.header("Access-Control-Allow-Origin", "origin");
+            res.header("Access-Control-Allow-Headers", "X-Requested-With");
+            res.header("Access-Control-Allow-Headers", "Content-Type");
+            next();
         });
     }
 
