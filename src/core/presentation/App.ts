@@ -31,9 +31,7 @@ export default class App {
     public middlewares() {
         this.#express.use(cors());
         this.#express.use((req, res, next) => {
-            res.header("Access-Control-Allow-Origin", "origin");
-            res.header("Access-Control-Allow-Headers", "X-Requested-With");
-            res.header("Access-Control-Allow-Headers", "Content-Type");
+            res.header('Access-Control-Allow-Origin: *');
             next();
         });
     }
