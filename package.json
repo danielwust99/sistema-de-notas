@@ -2,7 +2,7 @@
     "name": "sistema-de-notas",
     "version": "3.1.1",
     "engines": {
-        "node": "14.17.1"
+        "node": "14.x"
     },
     "main": "server.js",
     "license": "MIT",
@@ -12,16 +12,15 @@
         "@types/jsonwebtoken": "^8.5.4",
         "@types/node": "^16.0.0",
         "@types/uuid": "^8.3.1",
-        "typescript": "^4.2.4",
         "ts-node-dev": "^1.1.8"
     },
     "dependencies": {
+        "typescript": "^4.2.4",
         "@types/bcrypt": "^5.0.0",
         "bcrypt": "^5.0.1",
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",
         "express": "^4.17.1",
-        "install": "^0.13.0",
         "jsonwebtoken": "^8.5.1",
         "pg": "^8.6.0",
         "reflect-metadata": "^0.1.13",
