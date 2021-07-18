@@ -1,7 +1,10 @@
 {
     "name": "sistema-de-notas",
-    "version": "1.0.0",
-    "main": "index.js",
+    "version": "3.1.1",
+    "engines": {
+        "node": "14.17.1"
+    },
+    "main": "server.js",
     "license": "MIT",
     "devDependencies": {
         "@types/cors": "^2.8.10",
