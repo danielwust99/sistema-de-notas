@@ -33,6 +33,8 @@ export default class App {
         this.#express.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*.herokuapp.com");
             res.header("Access-Control-Allow-Origin", "*");
+            res.header("Sec-Fetch-Mode", "cors");
+            res.header("Sec-Fetch-Site", "*");
             res.header("Referrer-Policy", "*");
             next();
         });
