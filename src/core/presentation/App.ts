@@ -31,7 +31,9 @@ export default class App {
     public middlewares() {
         this.#express.use(cors());
         this.#express.use((req, res, next) => {
-            res.header("Access-Control-Allow-Origin", "https://sistema-de-notas-front.herokuapp.com");
+            res.header("Access-Control-Allow-Origin", "*.herokuapp.com");
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Referrer-Policy", "*");
             next();
         });
     }
