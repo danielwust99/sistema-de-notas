@@ -1,3 +1,8 @@
+const url = "https://sistema-de-notas-back.herokuapp.com";
+axios.defaults.baseURL = url;
+
+// SELETORES
+
 const alertWarning = '<div class="alert alert-warning" role="alert">';
 const alertPrimary = '<div class="alert alert-primary" role="alert">';
 const alertSuccess = '<div class="alert alert-success" role="alert">';

@@ -1,6 +1,3 @@
-const url = "https://sistema-de-notas-back.herokuapp.com";
-axios.defaults.baseURL = url;
-
 if (!localStorage.sessao) {
     const sessao = {
         token: null,
