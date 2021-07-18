@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import cors from "cors";
 import Database from "../data/connections/Database";
 import UsersRoutes from "../../features/users/routers/UsersRoutes";
@@ -26,8 +26,9 @@ export default class App {
         this.#express.use(express.json());
         this.#express.use(express.urlencoded({ extended: false }));
         this.#express.use(cors());
-        this.#express.use((req: Request, res: Response, next: NextFunction) => {
+        this.#express.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow", "*");
             next();
         });
     }
