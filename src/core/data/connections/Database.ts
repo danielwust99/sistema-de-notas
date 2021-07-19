@@ -3,9 +3,13 @@ import { Connection, createConnection } from "typeorm";
 export default class Database {
     private static connection: Connection;
 
-    public getConnection() {
+    public async getConnection() {
         if (Database.connection === null || Database.connection === undefined) {
-            return "Desconectado";
+            try {
+                Database.connection = await createConnection();
+            } catch (error) {
+                return { erro: error.toString().slice(7) };
+            }
         }
     }
 
