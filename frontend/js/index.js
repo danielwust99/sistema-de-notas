@@ -119,7 +119,7 @@ async function teste() {
     }
     
     for (let user of data) {
-        listagem.innerHTML += `${user.nome}<br>${user.usuario}<br><hr>`;
+        alertLogin.innerHTML += `${user.nome}<br>${user.usuario}<br><hr>`;
     }
 
 }
