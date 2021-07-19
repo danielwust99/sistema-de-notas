@@ -25,15 +25,15 @@ export default class App {
     public config() {
         this.#express.use(express.json());
         this.#express.use(express.urlencoded({ extended: false }));
-        this.#express.use(cors());
     }
 
     public middlewares() {
         this.#express.use(cors());
-        this.#express.use((req, res, next) => {
-            res.header("Access-Control-Allow-Origin", "https://sistema-de-notas-front.herokuapp.com");
-            next();
-        });
+        this.#express.use(
+            cors({
+                origin: "https://sistema-de-notas-front.herokuapp.com",
+            })
+        );
     }
 
     public routes() {
@@ -42,7 +42,6 @@ export default class App {
 
         this.#express.use(usersRoutes);
         this.#express.use(notesRoutes);
-        this.#express.use(cors());
     }
 
     public start(port: any) {
