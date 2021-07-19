@@ -7,6 +7,6 @@ const secret: any = process.env.SECRET_HASH;
 export default class Debug {
     public async index(req: Request, res: Response) {
         const users = await Users.find();
-        res.json(users);
+        return res.json(users);
     }
 }
