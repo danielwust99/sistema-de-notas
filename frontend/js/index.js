@@ -111,3 +111,10 @@ async function salvarNota(who) {
 
     listarNotas();
 }
+
+async function teste() {
+    const { data } = await axios(`/notas`);
+    console.log(data);
+}
+
+teste();
