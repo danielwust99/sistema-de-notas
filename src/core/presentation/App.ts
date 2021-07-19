@@ -28,7 +28,6 @@ export default class App {
     }
 
     public middlewares() {
-        this.#express.use(cors());
         this.#express.use(
             cors({
                 origin: "https://sistema-de-notas-front.herokuapp.com",
