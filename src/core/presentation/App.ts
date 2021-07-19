@@ -28,6 +28,7 @@ export default class App {
         this.#express.use(
             cors({
                 origin: "*",
+                methods: "*",
                 credentials: true
             })
         );
