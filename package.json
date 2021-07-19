@@ -4,7 +4,6 @@
     "engines": {
         "node": "14.17.1"
     },
-    "type": "module",
     "main": "server.js",
     "license": "MIT",
     "devDependencies": {
@@ -32,7 +31,7 @@
         "dev": "ts-node-dev --respawn --transpile-only --files ./src/server.ts",
         "migration:run": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js migration:run",
         "migration:revert": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js migration:revert",
-        "start": "node -r dotenv/config ./out/server",
+        "start": "node -r cors dotenv/config ./out/server",
         "build": "npx tsc"
     }
 }

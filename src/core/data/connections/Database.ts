@@ -8,7 +8,7 @@ export default class Database {
             try {
                 Database.connection = await createConnection();
             } catch (error) {
-                return { erro: error.toString().slice(7) };
+                return { erro: error.toString().slice() };
             }
         }
     }
