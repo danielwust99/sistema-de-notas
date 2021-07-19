@@ -25,24 +25,15 @@ export default class App {
     public config() {
         this.#express.use(express.json());
         this.#express.use(express.urlencoded({ extended: false }));
-    }
-
-    public middlewares() {
         this.#express.use(
             cors({
                 origin: "*",
+                credentials: true
             })
         );
-        this.#express.use(function (req, res, next) {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header(
-                "Access-Control-Allow-Headers",
-                "Origin, X-Requested-With, Content-Type, Accept"
-            );
-            res.header("Access-Control-Allow-Methods", "*");
-            next();
-        });
     }
+
+    public middlewares() {}
 
     public routes() {
         const usersRoutes = new UsersRoutes().init();
