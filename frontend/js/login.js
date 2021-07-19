@@ -45,14 +45,14 @@ async function efetuarLogin(event) {
         senha: senha.value,
     });
 
-    if (data.message) {
-        return (alertLogin.innerHTML = `${alertDanger} ${data.message}`);
+    if (data.erro) {
+        return (alertLogin.innerHTML = `${alertDanger} ${data.erro}`);
     }
 
     sessao = data;
     localStorage.sessao = JSON.stringify(sessao);
 
-    if (data.token !== "null") {
+    if (data.token.length > 20) {
         alertLogin.innerHTML = `${alertPrimary} Login Efetuado, redirecionando </div>`;
         window.setTimeout(redirecionamento(), 2500);
     }

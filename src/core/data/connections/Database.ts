@@ -5,9 +5,8 @@ export default class Database {
 
     public getConnection() {
         if (Database.connection === null || Database.connection === undefined) {
-            return true;
+            return "Desconectado";
         }
-        return false;
     }
 
     public async openConnection(): Promise<void> {

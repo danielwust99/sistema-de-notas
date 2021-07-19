@@ -4,6 +4,7 @@ import UsersLoginMiddleware from "../../login/middlewares/UsersLoginMiddleware";
 import UsersIdentify from "../../users/middlewares/UsersIdentify";
 import NetworkCheck from "../../login/middlewares/NetworkCheck";
 import UsersController from "../controllers/UsersController";
+import LoginInput from "../../login/middlewares/LoginInput";
 import UserInput from "../../users/middlewares/UserInput";
 
 export default class UsersRoutes {
@@ -12,7 +13,7 @@ export default class UsersRoutes {
         const controller = new UsersController();
         const lcontroller = new UsersLoginController();
 
-        routes.post("/login", [NetworkCheck], lcontroller.login);
+        routes.post("/login", [NetworkCheck, LoginInput], lcontroller.login);
         routes.post("/usuarios", [UserInput], controller.store);
         routes.get(
             "/usuarios/:uid",

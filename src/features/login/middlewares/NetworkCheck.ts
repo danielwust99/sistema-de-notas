@@ -11,10 +11,11 @@ export default async function NetworkCheck(
 ) {
     const testeRede = new Database().getConnection();
 
-    if (testeRede) {
-        res.json({
-            message: "Não conectado",
+    if (testeRede == "Desconectado") {
+        return res.json({
+            erro: "Não conectado",
         });
+    } else {
+        next();
     }
-    next();
 }
