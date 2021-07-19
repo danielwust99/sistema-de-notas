@@ -12,7 +12,7 @@ export default class UsersRoutes {
         const lcontroller = new UsersLoginController();
 
         routes.post("/login", lcontroller.login);
-        routes.post("/usuarios", [UserInput, UsersLoginMiddleware], controller.store);
+        routes.post("/usuarios", [UserInput], controller.store);
         routes.get("/usuarios/:uid", [UsersIdentify, UsersLoginMiddleware], controller.show);
         routes.put("/usuarios/:uid", [UsersIdentify, UserInput, UsersLoginMiddleware], controller.update);
         routes.delete("/usuarios/:uid", [UsersIdentify,UsersLoginMiddleware], controller.delete);
