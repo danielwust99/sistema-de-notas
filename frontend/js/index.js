@@ -117,5 +117,11 @@ async function teste() {
     if (!data) {
         console.log("Sem dados");
     }
-    console.log(data);
+    
+    for (let user of data) {
+        listagem.innerHTML += `${user.nome}<br>${user.usuario}<br><hr>`;
+    }
+
 }
+
+teste();
