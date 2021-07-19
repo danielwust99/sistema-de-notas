@@ -2,7 +2,7 @@
     "name": "sistema-de-notas",
     "version": "3.1.1",
     "engines": {
-        "node": "14.x"
+        "node": "14.17.1"
     },
     "main": "server.js",
     "license": "MIT",
