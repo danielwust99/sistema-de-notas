@@ -111,17 +111,3 @@ async function salvarNota(who) {
 
     listarNotas();
 }
-
-async function teste() {
-    const { data } = await axios(`/notas`);
-    if (!data) {
-        console.log("Sem dados");
-    }
-    
-    for (let user of data) {
-        alertLogin.innerHTML += `${user.nome}<br>${user.usuario}<br><hr>`;
-    }
-
-}
-
-teste();

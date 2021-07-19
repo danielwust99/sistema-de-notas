@@ -51,14 +51,5 @@ export default class NotesController {
         await Notes.delete(uid);
 
         return response.sendStatus(204);
-    }
-
-    //DEBUG
-    public async all(req: Request, res: Response) {
-        const { uid } = req.params;
-        const notas = await Notes.find();
-
-        return res.json(notas);
-    }
-    
+    }    
 }

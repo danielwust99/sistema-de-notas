@@ -43,14 +43,7 @@ export default class UsersController {
         const { uid } = request.params;
 
         await Users.delete(uid);
-        // OBS: CASCADE PRA FUNCIONALIDADE TOTAL
 
         return response.sendStatus(204);
     }
 }
-
-// public async index(req: Request, res: Response) {
-//     const usuarios = await Users.find();
-
-//     return res.json({ "Solicitante:": req.userUid, usuarios });
-// }

@@ -15,9 +15,6 @@ export default class NotesRoutes {
         routes.post("/notas/", [UsersLoginMiddleware, NoteInput], controller.store);
         routes.put("/notas/:uid", [UsersLoginMiddleware, NotesIdentify, NoteInput], controller.update);
         routes.delete("/notas/:uid", [UsersLoginMiddleware, NotesIdentify], controller.delete);
-        
-        //DEBUG
-        // routes.get("/notas", controller.all);
 
         return routes;
     }
