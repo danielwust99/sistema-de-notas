@@ -114,7 +114,8 @@ async function salvarNota(who) {
 
 async function teste() {
     const { data } = await axios(`/notas`);
+    if (!data) {
+        console.log("Sem dados");
+    }
     console.log(data);
 }
-
-teste();
