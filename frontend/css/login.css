@@ -1,63 +1,66 @@
 body {
-  background-color: gray;
+    background-color: gray;
 }
 
 .sumida {
-  display: none;
+    display: none;
 }
 
 #esquerda {
-  background-color:rgba(241, 226, 226, 0.15);
-  border-radius: 30px;
-  padding: 4%;
+    background-color: rgba(241, 226, 226, 0.15);
+    border-radius: 30px;
+    padding: 4%;
 }
 
 #outra {
-  background-color:rgba(241, 226, 226, 0.15);
-  border-radius: 30px;
-  padding: 7%;
+    background-color: rgba(241, 226, 226, 0.15);
+    border-radius: 30px;
+    padding: 7%;
 }
 
 #direita {
-  background-color:rgba(241, 226, 226, 0.15);
-  border-radius: 30px;
-  padding: 7%;
+    background-color: rgba(241, 226, 226, 0.15);
+    border-radius: 30px;
+    padding: 7%;
 }
 
 .navbar-brand {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 body {
-  background-image: url('https://i.pinimg.com/originals/3d/08/e0/3d08e03cb40252526fee2036a67f07f1.gif');
+    background-image: url("../images/bg.gif");
 }
 
 .row {
-  text-align: center;
+    text-align: center;
 }
 
-h1, h3, label, span {
-  color: white
+h1,
+h3,
+label,
+span {
+    color: white;
 }
 .acao {
-  color: chartreuse;
+    color: chartreuse;
 }
 
 div img {
-  border-radius: 80px;
-  border: 8px solid #0d6efd;
+    border-radius: 80px;
+    border: 8px solid #0d6efd;
 }
 
 #alerta-login {
-  display: flex;
-  justify-content: center;
-  margin: 1%;
+    display: flex;
+    justify-content: center;
+    margin: 1%;
 }
 
-.modal-footer button{
-  color: white;
+.modal-footer button {
+    color: white;
 }
 
 .acao {
-  cursor: pointer;
+    cursor: pointer;
 }
