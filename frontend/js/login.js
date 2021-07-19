@@ -45,6 +45,10 @@ async function efetuarLogin(event) {
         senha: senha.value,
     });
 
+    if (data.message) {
+        return (alertLogin.innerHTML = `${alertDanger} ${data.message}`);
+    }
+
     sessao = data;
     localStorage.sessao = JSON.stringify(sessao);
 

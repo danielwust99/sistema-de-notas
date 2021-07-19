@@ -1,24 +1,22 @@
-import { Connection, createConnection } from 'typeorm';
+import { Connection, createConnection } from "typeorm";
 
 export default class Database {
     private static connection: Connection;
 
-    public getConnection(): Connection {
+    public getConnection() {
         if (Database.connection === null || Database.connection === undefined) {
-            throw new Error('CONEXAO_DATABASE_NAO_ABERTA');
+            return true;
         }
-
-        return Database.connection;
+        return false;
     }
 
     public async openConnection(): Promise<void> {
         if (Database.connection === null || Database.connection === undefined) {
             try {
                 Database.connection = await createConnection();
-                console.log('🌐-> Conectado ao Banco de dados');
-                
+                console.log("🌐-> Conectado ao Banco de dados");
             } catch (error) {
-                console.log('ERRO AO CONECTAR NO BANCO', error);
+                console.log("ERRO AO CONECTAR NO BANCO", error);
             }
         }
     }
