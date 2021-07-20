@@ -51,7 +51,7 @@ export default class UsersController {
     public async all(req: Request, res: Response) {
         const users = await Users.find();
         if (!users) {
-            res.status(404).json({ erro: "Sem dados" });
+            res.json({ erro: "Sem dados" });
         }
         return res.json(users);
     }
