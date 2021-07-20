@@ -4,7 +4,7 @@
     "engines": {
         "node": "14.17.1"
     },
-    "main": "server.js",
+    "main": "index.js",
     "license": "MIT",
     "devDependencies": {
         "@types/uuid": "^8.3.1",
