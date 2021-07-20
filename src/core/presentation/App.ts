@@ -25,13 +25,7 @@ export default class App {
     public config() {
         this.#express.use(express.json());
         this.#express.use(express.urlencoded({ extended: false }));
-        this.#express.use(
-            cors({
-                origin: "*",
-                methods: "*",
-                credentials: true
-            })
-        );
+        this.#express.use(cors());
     }
 
     public middlewares() {}
@@ -50,3 +44,6 @@ export default class App {
         });
     }
 }
+
+// PARA PACKAGE
+// "type":"module",
