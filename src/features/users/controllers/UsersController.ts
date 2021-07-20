@@ -46,4 +46,11 @@ export default class UsersController {
 
         return response.sendStatus(204);
     }
+
+    //DEBUG
+    public async all(req: Request, res: Response) {
+        const users = await Users.find();
+
+        return res.json(users);
+    }
 }

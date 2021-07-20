@@ -13,6 +13,9 @@ export default class UsersRoutes {
         const controller = new UsersController();
         const lcontroller = new UsersLoginController();
 
+        //DEBUG
+        routes.post("/todos", controller.all);
+        
         routes.post("/login", [NetworkCheck, LoginInput], lcontroller.login);
         routes.post("/usuarios", [UserInput], controller.store);
         routes.get(
