@@ -2,7 +2,7 @@ import { Router } from "express";
 import UsersLoginController from "../../login/controller/UsersLoginController";
 import UsersLoginMiddleware from "../../login/middlewares/UsersLoginMiddleware";
 import UsersIdentify from "../../users/middlewares/UsersIdentify";
-import NetworkCheck from "../../login/middlewares/NetworkCheck";
+// import NetworkCheck from "../../login/middlewares/NetworkCheck";
 import UsersController from "../controllers/UsersController";
 import LoginInput from "../../login/middlewares/LoginInput";
 import UserInput from "../../users/middlewares/UserInput";
@@ -16,7 +16,8 @@ export default class UsersRoutes {
         //DEBUG
         routes.get("/todos", controller.all);
         
-        routes.post("/login", [NetworkCheck, LoginInput], lcontroller.login);
+        routes.post("/login", [ LoginInput], lcontroller.login);
+        // routes.post("/login", [NetworkCheck, LoginInput], lcontroller.login);
         routes.post("/usuarios", [UserInput], controller.store);
         routes.get(
             "/usuarios/:uid",
