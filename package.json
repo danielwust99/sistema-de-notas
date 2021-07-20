@@ -1,7 +1,6 @@
 {
     "name": "sistema-de-notas",
     "version": "3.1.1",
-    "type": "commonjs",
     "engines": {
         "node": "14.17.1"
     },
@@ -28,6 +27,7 @@
         "typeorm": "^0.2.34",
         "uuid": "^8.3.2"
     },
+    "type": "module",
     "scripts": {
         "dev": "ts-node-dev --respawn --transpile-only --files ./src/server.ts",
         "migration:run": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js migration:run",
