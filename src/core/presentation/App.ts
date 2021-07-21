@@ -44,6 +44,3 @@ export default class App {
         });
     }
 }
-
-// PARA PACKAGE
-// "type":"module",
