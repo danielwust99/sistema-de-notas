@@ -8,6 +8,7 @@ export default class Database {
             try {
                 Database.connection = await createConnection();
             } catch (error) {
+                console.log("ERRO AO CONECTAR NO BANCO", error);
                 return { erro: error.toString().slice() };
             }
         }
