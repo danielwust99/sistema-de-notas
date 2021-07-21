@@ -1,16 +1,13 @@
-# GitHub
-
-# Back
-https://github.com/danielwust99/sistema-de-notas
-# Front
-https://github.com/danielwust99/sistema-de-notas-front
+# GitHub e Heroku
 
 # Backend
 
+https://github.com/danielwust99/sistema-de-notas
 https://sistema-de-notas-back.herokuapp.com
 
 # Frontend
 
+https://github.com/danielwust99/sistema-de-notas-front
 https://sistema-de-notas-front.herokuapp.com
 
 # Obs.
