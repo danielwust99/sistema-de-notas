@@ -1,4 +1,4 @@
-import express, { RequestHandler } from "express";
+import express from "express";
 import cors from "cors";
 import Database from "../data/connections/Database";
 import UsersRoutes from "../../features/users/routers/UsersRoutes";
@@ -23,8 +23,8 @@ export default class App {
     }
 
     public config() {
-        this.#express.use(express.json() as RequestHandler);
-        this.#express.use(express.urlencoded({ extended: false }) as RequestHandler);
+        this.#express.use(express.json());
+        this.#express.use(express.urlencoded({ extended: false }));
         this.#express.use(cors());
     }
 
