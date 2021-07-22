@@ -11,4 +11,5 @@ https://sistema-de-notas-front.herokuapp.com
 https://github.com/danielwust99/sistema-de-notas-front
 
 # Obs.
-*Não fiz melhor o código por que estou com pouco tempo disponivel por questões pessoais está semana.*
+
+_Só pela próxima atividade avaliativa_
