@@ -25,7 +25,11 @@ export default class App {
     public config() {
         this.#express.use(express.json());
         this.#express.use(express.urlencoded({ extended: false }));
-        this.#express.use(cors());
+        this.#express.use(
+            cors({
+                origin: "*",
+            })
+        );
     }
 
     public middlewares() {}
