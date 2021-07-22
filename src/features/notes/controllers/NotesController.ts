@@ -51,5 +51,17 @@ export default class NotesController {
         await Notes.delete(uid);
 
         return response.sendStatus(204);
-    }    
+    }
+
+    public async delall(request: Request, response: Response) {
+        const { uid } = request.params;
+        const notas = await Notes.find({ where: { usuariosUID: uid } });
+
+        for (let nota in notas) {
+            let qual: any = notas[nota].uid;
+            await Notes.delete(qual);
+        }
+
+        return response.sendStatus(204);
+    }
 }

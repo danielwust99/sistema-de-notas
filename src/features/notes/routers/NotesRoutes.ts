@@ -10,11 +10,12 @@ export default class NotesRoutes {
         const routes = Router();
         const controller = new NotesController();
 
-        routes.get("/notas/:uid/todas/", [UsersLoginMiddleware, NotesIdentify], controller.index);
+        routes.get("/notas/:uid/todas", [UsersLoginMiddleware, NotesIdentify], controller.index);
         routes.get("/notas/:uid", [UsersLoginMiddleware, NotesIdentify], controller.show);
         routes.post("/notas/", [UsersLoginMiddleware, NoteInput], controller.store);
         routes.put("/notas/:uid", [UsersLoginMiddleware, NotesIdentify, NoteInput], controller.update);
         routes.delete("/notas/:uid", [UsersLoginMiddleware, NotesIdentify], controller.delete);
+        routes.delete("/notas/:uid/todas", [UsersLoginMiddleware, NotesIdentify], controller.delall);
 
         return routes;
     }
