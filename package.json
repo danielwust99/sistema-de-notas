@@ -2,7 +2,7 @@
     "name": "sistema-de-notas",
     "author": "Daniel Wust",
     "version": "3.1.1",
-    "main": "server.js",
+    "main": "index.js",
     "license": "MIT",
     "devDependencies": {
         "@types/bcrypt": "^5.0.0",
@@ -27,6 +27,10 @@
     },
     "scripts": {
         "build": "npx tsc",
-        "start": "node ./public/server.js"
+        "start": "ts-node --files src/server.ts",
+        "start:local": "node -r dotenv/config ./out/server",
+        "dev": "ts-node-dev --respawn --transpile-only --files ./src/server.ts",
+        "migration:run": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js migration:run",
+        "migration:revert": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js migration:revert"
     }
 }
