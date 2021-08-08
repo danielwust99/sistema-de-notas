@@ -14,4 +14,4 @@ https://github.com/danielwust99/sistema-de-notas-front - GitHub Front
 
 # Obs.
 
-_Só pela próxima atividade avaliativa_
+_Vamo lá GrowDevers!_
