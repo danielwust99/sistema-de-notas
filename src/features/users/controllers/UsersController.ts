@@ -1,58 +1,81 @@
-import { Request, Response } from "express";
-import { Users } from "../../../core/data/database/entities/Users";
-import { v4 as uuid } from "uuid";
-import bcrypt from "bcrypt";
+import { HttpResponse, HttpRequest, ok, serverError, notFound } from "../../../core";
+import UsersRepository from "../repositories/UsersRepositories";
+import { MVCController } from "../../../core/contracts";
 
-export default class UsersController {
-    public async show(req: Request, res: Response) {
-        const { uid } = req.params;
-        const user = await Users.findOne(uid);
+export default class UsersController implements MVCController {
+    readonly #repo: UsersRepository;
 
-        return res.json(user);
+    constructor(repo: UsersRepository) {
+        this.#repo = repo;
     }
 
-    public async store(req: Request, res: Response) {
-        const { nome, usuario, senha } = req.body;
-        const users = await new Users(
-            uuid(),
-            nome,
-            usuario,
-            bcrypt.hashSync(senha, 8)
-        ).save();
+    public async store(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const novoUsuario = await this.#repo.create(req.body);
 
-        return res.json(users);
-    }
-
-    public async update(req: Request, res: Response) {
-        const { uid } = req.params;
-        const { nome, usuario, senha } = req.body;
-
-        const users = await Users.findOne(uid);
-
-        if (users) {
-            users.nome = nome;
-            users.usuario = usuario;
-            users.senha = bcrypt.hashSync(senha, 8);
-            users.save();
+            return ok(novoUsuario);
+        } catch {
+            return serverError();
         }
-
-        return res.json(users);
     }
 
-    public async delete(request: Request, response: Response) {
-        const { uid } = request.params;
+    public async show(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const usuario = await this.#repo.getOne(req.params.uid);
 
-        await Users.delete(uid);
+            if (!usuario) {
+                return notFound();
+            }
 
-        return response.sendStatus(204);
-    }
-
-    //DEBUG
-    public async all(req: Request, res: Response) {
-        const users = await Users.find();
-        if (!users) {
-            res.json({ erro: "Sem dados" });
+            return ok(usuario);
+        } catch {
+            return serverError();
         }
-        return res.json(users);
+    }
+
+    public async update(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const usuario = await this.#repo.update(
+                req.params.uid,
+                req.body
+            );
+
+            return ok(usuario);
+        } catch {
+            return serverError();
+        }
+    }
+
+    public async delete(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            await this.#repo.delete(req.params.uid);
+
+            return ok({
+                Mensagem: `Nota: ${req.params.uid} deletada com sucesso`,
+            });
+        } catch {
+            return serverError();
+        }
+    }
+
+    public async login(req: HttpRequest): Promise<HttpResponse | any> {
+        try {
+            const validacao = await this.#repo.login(
+                req.params,
+                req.body
+            );
+
+            if (!validacao) {
+                return notFound();
+            }
+
+            return ok(validacao);
+        } catch {
+            return serverError();
+        }
+    }
+
+    async index(){
+        return serverError();
     }
 }

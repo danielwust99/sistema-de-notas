@@ -1,21 +1,21 @@
-import { Request, Response, NextFunction } from "express";
+import { HttpResponse, InvalidParam, HttpRequest, badRequest, ok, } from "../../../core";
+import { Users } from "../../../core/data/database/entities";
 
-export default async function UserInput(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
-    const { nome, usuario, senha } = req.body;
+export class UserInputMiddleware {
+    async handle(req: HttpRequest): Promise<HttpResponse> {
+        const body: Users = req.body;
+        const { nome, usuario, senha } = body;
 
-    if (
-        !nome ||
-        nome == "" ||
-        !usuario ||
-        usuario == "" ||
-        !senha ||
-        senha == ""
-    ) {
-        return res.json("Dados invalidos");
+        if (
+            !nome ||
+            nome == "" ||
+            !usuario ||
+            usuario == "" ||
+            !senha ||
+            senha == ""
+        ) {
+            return badRequest(new InvalidParam("dados invalidos"));
+        }
+        return ok({});
     }
-    next();
 }

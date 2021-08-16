@@ -1,38 +1,55 @@
-import { Router } from "express";
-import UsersLoginController from "../../login/controller/UsersLoginController";
-import UsersLoginMiddleware from "../../login/middlewares/UsersLoginMiddleware";
-import UsersIdentify from "../../users/middlewares/UsersIdentify";
+import { UserIdentifyMiddleware } from "../../users/middlewares/UserIdentify";
+import { UsersLoginMiddleware } from "../middlewares/UsersLoginMiddleware";
+import { UserInputMiddleware } from "../../users/middlewares/UserInput";
+import { LoginInputMiddleware } from "../middlewares/LoginInput";
+import UsersRepository from "../repositories/UsersRepositories";
 import UsersController from "../controllers/UsersController";
-import LoginInput from "../../login/middlewares/LoginInput";
-import UserInput from "../../users/middlewares/UserInput";
+import { EMVC, routerMvcAdapter } from "../../../core";
+import { MVCController } from "../../../core/contracts";
+import { middlewareAdapter } from "../../../core";
+import { Router } from "express";
+
+const controlador = (): MVCController => {
+    const repo = new UsersRepository();
+    return new UsersController(repo);
+};
 
 export default class UsersRoutes {
-    public init(): Router {
-        const routes = Router();
-        const controller = new UsersController();
-        const loginController = new UsersLoginController();
-
-        routes.post("/login", [LoginInput], loginController.login);
-        routes.post("/usuarios", [UserInput], controller.store);
+    public init(routes: Router) {
+        routes.post(
+            "/login",
+            [middlewareAdapter(new LoginInputMiddleware())],
+            routerMvcAdapter(controlador(), EMVC.LOGIN)
+        );
+        routes.post(
+            "/usuarios",
+            [middlewareAdapter(new UserInputMiddleware())],
+            routerMvcAdapter(controlador(), EMVC.STORE)
+        );
         routes.get(
             "/usuarios/:uid",
-            [UsersIdentify, UsersLoginMiddleware],
-            controller.show
+            [
+                middlewareAdapter(new UserIdentifyMiddleware()),
+                // middlewareAdapter(new UsersLoginMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.SHOW)
         );
         routes.put(
             "/usuarios/:uid",
-            [UsersIdentify, UserInput, UsersLoginMiddleware],
-            controller.update
+            [
+                middlewareAdapter(new UserIdentifyMiddleware()),
+                middlewareAdapter(new UserInputMiddleware()),
+                // middlewareAdapter(new UsersLoginMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.UPDATE)
         );
         routes.delete(
             "/usuarios/:uid",
-            [UsersIdentify, UsersLoginMiddleware],
-            controller.delete
+            [
+                middlewareAdapter(new UserIdentifyMiddleware()),
+                // middlewareAdapter(new UsersLoginMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.DELETE)
         );
-
-        return routes;
     }
 }
-
-// import NetworkCheck from "../../login/middlewares/NetworkCheck";
-// routes.post("/login", [NetworkCheck, LoginInput], lcontroller.login);

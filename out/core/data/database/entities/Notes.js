@@ -14,12 +14,12 @@ const typeorm_1 = require("typeorm");
 const uuid_1 = require("uuid");
 const Users_1 = require("./Users");
 let Notes = class Notes extends typeorm_1.BaseEntity {
-    constructor(uid, descricao, detalhamento, usuariosUID, createdAt, updatedAt) {
+    constructor(uid, descricao, detalhamento, usuarioUid, createdAt, updatedAt) {
         super();
         this.uid = uid;
         this.descricao = descricao;
         this.detalhamento = detalhamento;
-        this.usuariosUID = usuariosUID;
+        this.usuarioUid = usuarioUid;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -45,9 +45,9 @@ __decorate([
     __metadata("design:type", String)
 ], Notes.prototype, "detalhamento", void 0);
 __decorate([
-    typeorm_1.Column({ name: "usuarios_uid" }),
+    typeorm_1.Column({ name: "usuario_uid" }),
     __metadata("design:type", String)
-], Notes.prototype, "usuariosUID", void 0);
+], Notes.prototype, "usuarioUid", void 0);
 __decorate([
     typeorm_1.Column({ name: "created_at" }),
     __metadata("design:type", Date)
@@ -58,7 +58,7 @@ __decorate([
 ], Notes.prototype, "updatedAt", void 0);
 __decorate([
     typeorm_1.OneToMany((type) => Users_1.Users, (usuarios) => usuarios.notas),
-    typeorm_1.JoinColumn({ name: "usuarios_uid", referencedColumnName: "uid" }),
+    typeorm_1.JoinColumn({ name: "usuario_uid", referencedColumnName: "uid" }),
     __metadata("design:type", Users_1.Users)
 ], Notes.prototype, "usuarios", void 0);
 __decorate([

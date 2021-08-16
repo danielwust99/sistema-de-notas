@@ -1,12 +1,19 @@
-import "reflect-metadata";
+import Database from "./core/data/connections/Database";
 import App from "./core/presentation/App";
 import dotenv from "dotenv";
+import "reflect-metadata";
 
 dotenv.config({
-    path: "../.env",
+    path: "./../.env",
 });
 
-const app = new App();
-const port = process.env.PORT || 8080;
+new Database()
+    .openConnection()
+    .then((_) => {
+        const app = new App();
+        const port = process.env.PORT || '8080';
 
-app.init().then(_ => app.start(port));
+        app.init();
+        app.start(parseInt(port));
+    })
+    .catch(console.error);

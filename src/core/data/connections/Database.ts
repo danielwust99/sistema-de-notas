@@ -24,4 +24,6 @@ export default class Database {
             }
         }
     }
+    
+    public closeConnection() {}
 }

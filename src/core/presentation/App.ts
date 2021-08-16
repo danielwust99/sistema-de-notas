@@ -1,8 +1,7 @@
-import express from "express";
-import cors from "cors";
-import Database from "../data/connections/Database";
 import UsersRoutes from "../../features/users/routers/UsersRoutes";
 import NotesRoutes from "../../features/notes/routers/NotesRoutes";
+import express, { Router, Request, Response } from "express";
+import cors from "cors";
 
 export default class App {
     readonly #express: express.Application;
@@ -11,40 +10,45 @@ export default class App {
         this.#express = express();
     }
 
-    public async init() {
+    public get server(): express.Application {
+        return this.#express;
+    }
+
+    public init() {
         this.config();
         this.middlewares();
         this.routes();
-        await this.database();
     }
 
-    public async database() {
-        await new Database().openConnection();
-    }
-
-    public config() {
-        this.#express.use(express.json());
+    private config() {
         this.#express.use(express.urlencoded({ extended: false }));
-        this.#express.use(
-            cors({
-                origin: "*",
-            })
+        this.#express.use(express.json());
+        this.#express.use(cors());
+    }
+
+    private middlewares() {}
+
+    private routes() {
+        const routers = Router();
+
+        this.#express.get("/", (_: Request, res: Response) =>
+            res.redirect("/api")
         );
+        this.#express.use("/api", routers);
+
+        routers.get("/", (_: Request, res: Response) =>
+            res.send("API RODANDO")
+        );
+
+        new UsersRoutes().init(routers);
+        new NotesRoutes().init(routers);
     }
 
-    public middlewares() {}
-
-    public routes() {
-        const usersRoutes = new UsersRoutes().init();
-        const notesRoutes = new NotesRoutes().init();
-
-        this.#express.use(usersRoutes);
-        this.#express.use(notesRoutes);
-    }
-
+    /* instanbul ignore next */ 
     public start(port: any) {
         this.#express.listen(port, () => {
             console.log(`🔥-> API Rodando (${port})..`);
         });
     }
 }
+

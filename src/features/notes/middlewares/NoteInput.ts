@@ -1,21 +1,21 @@
-import { Request, Response, NextFunction } from "express";
+import { HttpResponse, InvalidParam, HttpRequest, badRequest, ok } from "../../../core";
+import { Notes } from "../../../core/data/database/entities";
 
-export default async function NoteInput(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
-    const { descricao, detalhamento, usuariosUID } = req.body;
+export class NoteInputMiddleware {
+    async handle(req: HttpRequest): Promise<HttpResponse> {
+        const body: Notes = req.body;
+        const { descricao, detalhamento, usuarioUid } = body;
 
-    if (
-        !descricao ||
-        descricao == "" ||
-        !detalhamento ||
-        detalhamento == "" ||
-        !usuariosUID ||
-        usuariosUID == ""
-    ) {
-        return res.json("Dados invalidos");
+        if (
+            !descricao ||
+            descricao == "" ||
+            !detalhamento ||
+            detalhamento == "" ||
+            !usuarioUid ||
+            usuarioUid == ""
+        ) {
+            return badRequest(new InvalidParam("dados invalidos"));
+        }
+        return ok({});
     }
-    next();
 }

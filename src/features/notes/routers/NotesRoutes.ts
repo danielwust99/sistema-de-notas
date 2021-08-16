@@ -1,22 +1,71 @@
-import { Router } from "express";
+import { UserIdentifyMiddleware } from "../../users/middlewares/UserIdentify";
+import { NoteInputMiddleware } from "../../notes/middlewares/NoteInput";
+import { UsersLoginMiddleware } from "../../users/middlewares/UsersLoginMiddleware";
+import { CacheRepository } from "../../../core/data/repositories";
+import NotesRepository from "../repositories/NotesRepositories";
 import NotesController from "../controllers/NotesController";
-import NotesIdentify from '../../notes/middlewares/NotesIdentify';
-import NoteInput from '../../notes/middlewares/NoteInput';
+import { MVCController } from "../../../core/contracts";
+import { EMVC, routerMvcAdapter } from "../../../core";
+import { middlewareAdapter } from "../../../core";
+import { Router } from "express";
 
-import UsersLoginMiddleware from "../../login/middlewares/UsersLoginMiddleware";
+const controlador = (): MVCController => {
+    const repo = new NotesRepository();
+    const cache = new CacheRepository();
+
+    return new NotesController(repo, cache);
+};
 
 export default class NotesRoutes {
-    public init(): Router {
-        const routes = Router();
-        const controller = new NotesController();
-
-        routes.get("/notas/:uid/todas", [UsersLoginMiddleware, NotesIdentify], controller.index);
-        routes.get("/notas/:uid", [UsersLoginMiddleware, NotesIdentify], controller.show);
-        routes.post("/notas/", [UsersLoginMiddleware, NoteInput], controller.store);
-        routes.put("/notas/:uid", [UsersLoginMiddleware, NotesIdentify, NoteInput], controller.update);
-        routes.delete("/notas/:uid", [UsersLoginMiddleware, NotesIdentify], controller.delete);
-        routes.delete("/notas/:uid/todas", [UsersLoginMiddleware, NotesIdentify], controller.deleteAll);
-
-        return routes;
+    public init(routes: Router) {
+        routes.get(
+            "/notas/:uid/todas",
+            [
+                // middlewareAdapter(new UsersLoginMiddleware()),
+                // middlewareAdapter(new UserIdentifyMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.INDEX)
+        );
+        routes.get(
+            "/notas/:uid",
+            [
+                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UserIdentifyMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.SHOW)
+        );
+        routes.post(
+            "/notas/",
+            [
+                // middlewareAdapter(new NoteInputMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.STORE)
+        );
+        routes.put(
+            "/notas/:uid",
+            [
+                middlewareAdapter(new NoteInputMiddleware()),
+                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UserIdentifyMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.UPDATE)
+        );
+        routes.delete(
+            "/notas/:uid",
+            [
+                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UserIdentifyMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.DELETE)
+        );
+        routes.delete(
+            "/notas/:uid/todas",
+            [
+                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UserIdentifyMiddleware()),
+            ],
+            routerMvcAdapter(controlador(), EMVC.DELETEALL)
+        );
     }
 }

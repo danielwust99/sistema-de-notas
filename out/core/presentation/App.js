@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
     if (kind === "m") throw new TypeError("Private method is not writable");
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
@@ -15,37 +34,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _App_express;
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const Database_1 = __importDefault(require("../data/connections/Database"));
 const UsersRoutes_1 = __importDefault(require("../../features/users/routers/UsersRoutes"));
 const NotesRoutes_1 = __importDefault(require("../../features/notes/routers/NotesRoutes"));
+const express_1 = __importStar(require("express"));
+const cors_1 = __importDefault(require("cors"));
 class App {
     constructor() {
         _App_express.set(this, void 0);
         __classPrivateFieldSet(this, _App_express, express_1.default(), "f");
     }
-    async init() {
+    get server() {
+        return __classPrivateFieldGet(this, _App_express, "f");
+    }
+    init() {
         this.config();
         this.middlewares();
         this.routes();
-        await this.database();
-    }
-    async database() {
-        await new Database_1.default().openConnection();
     }
     config() {
-        __classPrivateFieldGet(this, _App_express, "f").use(express_1.default.json());
         __classPrivateFieldGet(this, _App_express, "f").use(express_1.default.urlencoded({ extended: false }));
+        __classPrivateFieldGet(this, _App_express, "f").use(express_1.default.json());
         __classPrivateFieldGet(this, _App_express, "f").use(cors_1.default());
     }
     middlewares() { }
     routes() {
-        const usersRoutes = new UsersRoutes_1.default().init();
-        const notesRoutes = new NotesRoutes_1.default().init();
-        __classPrivateFieldGet(this, _App_express, "f").use(usersRoutes);
-        __classPrivateFieldGet(this, _App_express, "f").use(notesRoutes);
+        const routers = express_1.Router();
+        __classPrivateFieldGet(this, _App_express, "f").get("/", (_, res) => res.redirect("/api"));
+        __classPrivateFieldGet(this, _App_express, "f").use("/api", routers);
+        routers.get("/", (_, res) => res.send("API RODANDO"));
+        new UsersRoutes_1.default().init(routers);
+        new NotesRoutes_1.default().init(routers);
     }
+    /* instanbul ignore next */
     start(port) {
         __classPrivateFieldGet(this, _App_express, "f").listen(port, () => {
             console.log(`🔥-> API Rodando (${port})..`);

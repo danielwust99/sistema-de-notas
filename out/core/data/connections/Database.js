@@ -24,5 +24,6 @@ class Database {
             }
         }
     }
+    closeConnection() { }
 }
 exports.default = Database;

@@ -1,15 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-async function NoteInput(req, res, next) {
-    const { descricao, detalhamento, usuariosUID } = req.body;
-    if (!descricao ||
-        descricao == "" ||
-        !detalhamento ||
-        detalhamento == "" ||
-        !usuariosUID ||
-        usuariosUID == "") {
-        return res.json("Dados invalidos");
+exports.NoteInputMiddleware = void 0;
+const core_1 = require("../../../core");
+class NoteInputMiddleware {
+    async handle(req) {
+        const body = req.body;
+        const { descricao, detalhamento, usuarioUid } = body;
+        if (!descricao ||
+            descricao == "" ||
+            !detalhamento ||
+            detalhamento == "" ||
+            !usuarioUid ||
+            usuarioUid == "") {
+            return core_1.badRequest(new core_1.InvalidParam("dados invalidos"));
+        }
+        return core_1.ok({});
     }
-    next();
 }
-exports.default = NoteInput;
+exports.NoteInputMiddleware = NoteInputMiddleware;

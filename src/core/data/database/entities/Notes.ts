@@ -22,8 +22,8 @@ export class Notes extends BaseEntity {
     @Column()
     detalhamento: string;
 
-    @Column({ name: "usuarios_uid" })
-    usuariosUID: string;
+    @Column({ name: "usuario_uid" })
+    usuarioUid: string;
 
     @Column({ name: "created_at" })
     createdAt?: Date;
@@ -32,14 +32,14 @@ export class Notes extends BaseEntity {
     updatedAt?: Date;
 
     @OneToMany((type) => Users, (usuarios) => usuarios.notas)
-    @JoinColumn({ name: "usuarios_uid", referencedColumnName: "uid" })
+    @JoinColumn({ name: "usuario_uid", referencedColumnName: "uid" })
     usuarios?: Users;
 
     constructor(
         uid: string,
         descricao: string,
         detalhamento: string,
-        usuariosUID: string,
+        usuarioUid: string,
         createdAt?: Date,
         updatedAt?: Date
     ) {
@@ -47,7 +47,7 @@ export class Notes extends BaseEntity {
         this.uid = uid;
         this.descricao = descricao;
         this.detalhamento = detalhamento;
-        this.usuariosUID = usuariosUID;
+        this.usuarioUid = usuarioUid;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

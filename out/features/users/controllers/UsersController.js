@@ -1,46 +1,79 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var _UsersController_repo;
 Object.defineProperty(exports, "__esModule", { value: true });
-const Users_1 = require("../../../core/data/database/entities/Users");
-const uuid_1 = require("uuid");
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const core_1 = require("../../../core");
 class UsersController {
-    async show(req, res) {
-        const { uid } = req.params;
-        const user = await Users_1.Users.findOne(uid);
-        return res.json(user);
+    constructor(repo) {
+        _UsersController_repo.set(this, void 0);
+        __classPrivateFieldSet(this, _UsersController_repo, repo, "f");
     }
-    async store(req, res) {
-        const { nome, usuario, senha } = req.body;
-        const users = await new Users_1.Users(uuid_1.v4(), nome, usuario, bcrypt_1.default.hashSync(senha, 8)).save();
-        return res.json(users);
-    }
-    async update(req, res) {
-        const { uid } = req.params;
-        const { nome, usuario, senha } = req.body;
-        const users = await Users_1.Users.findOne(uid);
-        if (users) {
-            users.nome = nome;
-            users.usuario = usuario;
-            users.senha = bcrypt_1.default.hashSync(senha, 8);
-            users.save();
+    async store(req) {
+        try {
+            const novoUsuario = await __classPrivateFieldGet(this, _UsersController_repo, "f").create(req.body);
+            return core_1.ok(novoUsuario);
         }
-        return res.json(users);
-    }
-    async delete(request, response) {
-        const { uid } = request.params;
-        await Users_1.Users.delete(uid);
-        return response.sendStatus(204);
-    }
-    //DEBUG
-    async all(req, res) {
-        const users = await Users_1.Users.find();
-        if (!users) {
-            res.json({ erro: "Sem dados" });
+        catch {
+            return core_1.serverError();
         }
-        return res.json(users);
+    }
+    async show(req) {
+        try {
+            const usuario = await __classPrivateFieldGet(this, _UsersController_repo, "f").getOne(req.params.uid);
+            if (!usuario) {
+                return core_1.notFound();
+            }
+            return core_1.ok(usuario);
+        }
+        catch {
+            return core_1.serverError();
+        }
+    }
+    async update(req) {
+        try {
+            const usuario = await __classPrivateFieldGet(this, _UsersController_repo, "f").update(req.params.uid, req.body);
+            return core_1.ok(usuario);
+        }
+        catch {
+            return core_1.serverError();
+        }
+    }
+    async delete(req) {
+        try {
+            await __classPrivateFieldGet(this, _UsersController_repo, "f").delete(req.params.uid);
+            return core_1.ok({
+                Mensagem: `Nota: ${req.params.uid} deletada com sucesso`,
+            });
+        }
+        catch {
+            return core_1.serverError();
+        }
+    }
+    async login(req) {
+        try {
+            const validacao = await __classPrivateFieldGet(this, _UsersController_repo, "f").login(req.params, req.body);
+            if (!validacao) {
+                return core_1.notFound();
+            }
+            return core_1.ok(validacao);
+        }
+        catch {
+            return core_1.serverError();
+        }
+    }
+    async index() {
+        return core_1.serverError();
     }
 }
 exports.default = UsersController;
+_UsersController_repo = new WeakMap();

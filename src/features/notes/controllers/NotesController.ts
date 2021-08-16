@@ -1,93 +1,122 @@
-import { Request, Response } from "express";
-import { v4 as uuid } from "uuid";
-import { Notes } from "../../../core/data/database/entities/Notes";
+import { HttpResponse, HttpRequest, ok, serverError, notFound } from "../../../core";
+import { CacheRepository } from "../../../core/data/repositories";
+import NotesRepository from "../repositories/NotesRepositories";
+import { MVCController } from "../../../core/contracts";
 
-import Redis from "ioredis";
-const redis = new Redis();
+export default class NotesController implements MVCController {
+    readonly #repo: NotesRepository;
+    readonly #cache: CacheRepository;
 
-export default class NotesController {
-    public async index(req: Request, res: Response) {
-        const { uid } = req.params;
+    constructor(repo: NotesRepository, cache: CacheRepository) {
+        this.#repo = repo;
+        this.#cache = cache;
+    }
 
-        redis.get(`Notas:${uid}`, async function (err, result) {
-            if (result) {
-                return res.json(JSON.parse(result));
-            } else {
-                const notas = await Notes.find({ where: { usuariosUID: uid } });
+    public async index(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const cache = await this.#cache.get(`notas:${req.params.uid}`);
 
-                redis.set(`Notas:${uid}`, JSON.stringify(notas));
-
-                return res.json(notas);
+            if (cache) {
+                return ok(cache);
             }
-        });
-    }
 
-    public async show(req: Request, res: Response) {
-        const { uid } = req.params;
+            const notas = await this.#repo.getAll(req.params.uid);
 
-        redis.get(`Nota:${uid}`, async function (err, result) {
-            if (result) {
-                return res.json(JSON.parse(result));
-            } else {
-                const nota = await Notes.findOne(uid);
-
-                redis.set(`Nota:${uid}`, JSON.stringify(nota));
-
-                return res.json(nota);
+            if (!notas) {
+                return notFound();
             }
-        });
-    }
 
-    public async store(req: Request, res: Response) {
-        const { descricao, detalhamento, usuariosUID } = req.body;
-        const user = await new Notes(
-            uuid(),
-            descricao,
-            detalhamento,
-            usuariosUID
-        ).save();
-
-        redis.del(`Notas:${usuariosUID}`)
-
-        return res.json(user);
-    }
-
-    public async update(req: Request, res: Response) {
-        const { uid } = req.params;
-        const { descricao, detalhamento, usuariosUID } = req.body;
-
-        const nota = await Notes.findOne(uid);
-
-        if (nota) {
-            nota.descricao = descricao;
-            nota.detalhamento = detalhamento;
-            nota.usuariosUID = usuariosUID;
-            nota.save();
+            return ok(notas);
+        } catch {
+            return serverError();
         }
-        redis.set(`Nota:${uid}`, JSON.stringify(nota));
-
-        return res.json(nota);
     }
 
-    public async delete(request: Request, response: Response) {
-        const { uid } = request.params;
+    public async show(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const cache = await this.#cache.get(`nota:${req.params.uid}`);
 
-        await Notes.delete(uid);
+            if (cache) {
+                return ok(cache);
+            }
 
-        return response.sendStatus(204);
-    }
+            const nota = await this.#repo.getOne(req.params.uid);
 
-    public async deleteAll(request: Request, response: Response) {
-        const { uid } = request.params;
-        const notas = await Notes.find({ where: { usuariosUID: uid } });
+            if (!nota) {
+                return notFound();
+            }
 
-        for (let nota in notas) {
-            let qual: any = notas[nota].uid;
-            await Notes.delete(qual);
+            return ok(nota);
+        } catch {
+            return serverError();
         }
+    }
 
-        redis.del(`Notas:${uid}`)
+    public async store(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const novaNota = await this.#repo.create(req.body);
 
-        return response.sendStatus(204);
+            await this.#cache.set(`nota:${novaNota.uid}`, novaNota);
+            await this.#cache.del("nota:all");
+
+            return ok(novaNota);
+        } catch {
+            return serverError();
+        }
+    }
+
+    public async update(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const { uid } = req.params;
+            const notaAlvo = await this.#repo.update(uid, req.body);
+
+            if (!notaAlvo) {
+                return notFound();
+            }
+
+            await this.#cache.set(`nota:${uid}`, notaAlvo);
+            await this.#cache.del(`notas:${uid}`);
+
+            return ok(notaAlvo);
+        } catch {
+            return serverError();
+        }
+    }
+
+    public async delete(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const notaAlvo = await this.#repo.delete(req.params.uid);
+
+            await this.#cache.del(`nota:${req.params.uid}`);
+
+            if (!notaAlvo) {
+                return notFound();
+            }
+
+            return ok(notaAlvo);
+        } catch {
+            return serverError();
+        }
+    }
+
+    public async deleteAll(req: HttpRequest): Promise<HttpResponse> {
+        try {
+            const { uid } = req.params;
+            const notasAlvo = await this.#repo.deleteAll(uid);
+
+            await this.#cache.del(`notas:${uid}`);
+
+            if (!notasAlvo) {
+                return notFound();
+            }
+
+            return ok(notasAlvo);
+        } catch {
+            return serverError();
+        }
+    }
+
+    async login() {
+        return serverError();
     }
 }
