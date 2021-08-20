@@ -3,8 +3,8 @@
         "target": "ES2021",
         "module": "commonjs",
 
-        "outDir": "./public",
-        "rootDirs": ["public", "tests"],
+        "outDir": "./out",
+        "rootDirs": ["src", "tests"],
 
         "strict": true,
         "esModuleInterop": true,
@@ -13,5 +13,5 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
     },
-    "include": ["public"]
+    "include": ["src"]
 }

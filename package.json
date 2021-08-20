@@ -41,7 +41,7 @@
     },
     "scripts": {
         "build": "npx tsc",
-        "start": "ts-node --transpile-only --files ./public/server.ts reflect-metadata tsc node",
+        "start": "ts-node --transpile-only --files ./src/server.ts reflect-metadata tsc node",
         "start:local": "node -r dotenv/config ./out/server",
         "dev": "ts-node-dev --respawn --transpile-only --files ./src/server.ts",
         "migration:run": "ts-node-dev --transpile-only ./node_modules/typeorm/cli.js migration:run",
