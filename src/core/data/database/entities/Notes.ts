@@ -1,12 +1,12 @@
 import {
-    Entity,
-    BaseEntity,
-    PrimaryColumn,
     Column,
+    Entity,
     OneToMany,
     JoinColumn,
-    BeforeInsert,
+    BaseEntity,
     BeforeUpdate,
+    BeforeInsert,
+    PrimaryColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Users } from "./Users";
@@ -31,9 +31,9 @@ export class Notes extends BaseEntity {
     @Column({ name: "updated_at" })
     updatedAt?: Date;
 
-    @OneToMany((type) => Users, (usuario) => usuario.notas)
+    @OneToMany((type) => Users, (usuarios) => usuarios.notas)
     @JoinColumn({ name: "usuario_uid", referencedColumnName: "uid" })
-    usuario?: Users;
+    usuarios?: Users;
 
     constructor(
         uid: string,
