@@ -51,9 +51,8 @@ export default class UsersRepository {
         };
     }
 
-    //testar resultado
     async delete(uid: string): Promise<boolean> {
-        const usuarioAlvo = await this.getOne(uid);
+        const usuarioAlvo = await Users.delete(uid);
 
         if (!usuarioAlvo) {
             return false;

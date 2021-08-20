@@ -52,15 +52,16 @@ export default class NotesRepository {
         };
     }
 
-    //testar resultado
-    async delete(uid: string): Promise<boolean> {
+    async delete(uid: string): Promise<string | false> {
         const notaAlvo = await this.getOne(uid);
 
         if (!notaAlvo) {
             return false;
         }
 
-        return true;
+        await Notes.delete(uid);
+
+        return notaAlvo.usuarioUid;
     }
 
     async deleteAll(uid: string): Promise<boolean> {

@@ -51,10 +51,14 @@ export default class UsersController implements MVCController {
 
     public async delete(req: HttpRequest): Promise<HttpResponse> {
         try {
-            await this.#repo.delete(req.params.uid);
+            const usuario = await this.#repo.delete(req.params.uid);
+
+            if (!usuario) {
+                return notFound();
+            }
 
             return ok({
-                Mensagem: `Nota: ${req.params.uid} deletada com sucesso`,
+                Mensagem: `Usuario: ${req.params.uid} deletado com sucesso`,
             });
         } catch {
             return serverError();
@@ -63,7 +67,7 @@ export default class UsersController implements MVCController {
 
     public async login(req: HttpRequest): Promise<HttpResponse | any> {
         try {
-            const validacao = await this.#repo.login(req.body);            
+            const validacao = await this.#repo.login(req.body);
 
             if (!validacao) {
                 return notFound();

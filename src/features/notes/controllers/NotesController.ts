@@ -1,4 +1,10 @@
-import { HttpResponse, HttpRequest, ok, serverError, notFound } from "../../../core";
+import {
+    HttpResponse,
+    HttpRequest,
+    ok,
+    serverError,
+    notFound,
+} from "../../../core";
 import { CacheRepository } from "../../../core/data/repositories";
 import NotesRepository from "../repositories/NotesRepositories";
 import { MVCController } from "../../../core/contracts";
@@ -76,7 +82,7 @@ export default class NotesController implements MVCController {
                 return notFound();
             }
 
-            await this.#cache.set(`nota:${uid}`, notaAlvo);            
+            await this.#cache.set(`nota:${uid}`, notaAlvo);
             await this.#cache.del(`notas:${notaAlvo.usuarioUid}`);
 
             return ok(notaAlvo);
@@ -87,15 +93,17 @@ export default class NotesController implements MVCController {
 
     public async delete(req: HttpRequest): Promise<HttpResponse> {
         try {
-            const notaAlvo = await this.#repo.delete(req.params.uid);
-
-            await this.#cache.del(`nota:${req.params.uid}`);
+            const { uid } = req.params;
+            const notaAlvo = await this.#repo.delete(uid);
 
             if (!notaAlvo) {
                 return notFound();
             }
 
-            return ok(notaAlvo);
+            await this.#cache.del(`nota:${uid}`);
+            await this.#cache.del(`notas:${notaAlvo}`);
+
+            return ok({ msg: "success" });
         } catch {
             return serverError();
         }
@@ -106,13 +114,13 @@ export default class NotesController implements MVCController {
             const { uid } = req.params;
             const notasAlvo = await this.#repo.deleteAll(uid);
 
-            await this.#cache.del(`notas:${uid}`);
-
             if (!notasAlvo) {
                 return notFound();
             }
 
-            return ok(notasAlvo);
+            await this.#cache.del(`notas:${uid}`);
+
+            return ok({ msg: "success" });
         } catch {
             return serverError();
         }
