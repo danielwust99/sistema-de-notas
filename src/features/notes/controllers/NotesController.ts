@@ -26,6 +26,8 @@ export default class NotesController implements MVCController {
                 return notFound();
             }
 
+            await this.#cache.set(`notas:${req.params.uid}`, notas);
+
             return ok(notas);
         } catch {
             return serverError();
@@ -56,8 +58,8 @@ export default class NotesController implements MVCController {
         try {
             const novaNota = await this.#repo.create(req.body);
 
-            await this.#cache.set(`nota:${novaNota.uid}`, novaNota);
-            await this.#cache.del("nota:all");
+            await this.#cache.set(`nota:${req.body.usuarioUid}`, novaNota);
+            await this.#cache.del(`notas:${req.body.usuarioUid}`);
 
             return ok(novaNota);
         } catch {
@@ -74,8 +76,8 @@ export default class NotesController implements MVCController {
                 return notFound();
             }
 
-            await this.#cache.set(`nota:${uid}`, notaAlvo);
-            await this.#cache.del(`notas:${uid}`);
+            await this.#cache.set(`nota:${uid}`, notaAlvo);            
+            await this.#cache.del(`notas:${notaAlvo.usuarioUid}`);
 
             return ok(notaAlvo);
         } catch {

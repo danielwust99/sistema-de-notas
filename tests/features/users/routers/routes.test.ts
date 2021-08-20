@@ -26,7 +26,7 @@ const criarNota = async (): Promise<Notes> => {
     }).save();
 };
 
-describe("Project Routes", () => {
+describe("Note Routes", () => {
     const server = new App().server;
 
     beforeEach(async () => {
@@ -51,7 +51,7 @@ describe("Project Routes", () => {
         new Database().closeConnection();
     });
 
-    describe("Post Projects", () => {
+    describe("Post Notes", () => {
         test("Deve retornar codigo 400 quando nao tiver detalhamento", async () => {
             const user = await criarUsuario();
 
@@ -72,7 +72,7 @@ describe("Project Routes", () => {
             await request(server)
                 .post("/notas")
                 .send({
-                    nome: "qualquer_nome",
+                    detalhamento: "qualquer_nome",
                     descricao: "qualquer_descricao",
                     startAt: new Date(Date.now()).toLocaleDateString(),
                     finishAt: new Date(Date.now()).toLocaleDateString(),
@@ -83,18 +83,19 @@ describe("Project Routes", () => {
                 //     expect(request.body.usuarioUid).toEqual(user.uid);
                 // });
         });
-
-        test("Deve retornar codigo 400 quando usuarioUid eh invalido", async () => {
+        
+        test("Deve retornar codigo 404 quando usuario nao existir", async () => {
+            await criarNota();
+            
             await request(server)
                 .post("/notas")
                 .send({
-                    nome: "qualquer_nome",
                     descricao: "qualquer_descricao",
+                    detalhamento: "qualquer_detalhamento",
                     startAt: new Date(Date.now()).toLocaleDateString(),
                     finishAt: new Date(Date.now()).toLocaleDateString(),
-                    usuarioUid: "Falso_Uid", // teria que tratar
-                })
-                .expect(400, { error: "Erro: dados invalidos" });
+                    usuarioUid: "Vini-eh-o-usuario-bugado"
+                }).expect(404);
         });
     });
 
@@ -105,7 +106,8 @@ describe("Project Routes", () => {
             jest.spyOn(NotesRepository.prototype, "getAll")
             .mockResolvedValue([nota]);
 
-            await request(server).get("/notas").send().expect(200);
+            await request(server).get(`/notas/${nota.usuarioUid}/todas`)
+            .expect(200);
         });
     });
 
@@ -113,9 +115,8 @@ describe("Project Routes", () => {
         test("Deve retornar codigo 200 com qualquer nota", async () => {
             const nota = await criarNota();
 
-            jest.spyOn(NotesRepository.prototype, "getOne").mockResolvedValue(
-                nota
-            );
+            jest.spyOn(NotesRepository.prototype, "getOne")
+            .mockResolvedValue(nota);
 
             await request(server)
                 .get(`/notas/${nota.uid}`)

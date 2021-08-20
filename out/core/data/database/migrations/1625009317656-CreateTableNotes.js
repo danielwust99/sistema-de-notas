@@ -26,7 +26,7 @@ class CreateTableNotes1625009317656 {
                     isNullable: false,
                 },
                 {
-                    name: "usuarios_uid",
+                    name: "usuario_uid",
                     type: "uuid",
                     isNullable: false,
                 },
@@ -43,7 +43,7 @@ class CreateTableNotes1625009317656 {
             ],
             foreignKeys: [
                 new typeorm_1.TableForeignKey({
-                    columnNames: ["usuarios_uid"],
+                    columnNames: ["usuario_uid"],
                     referencedColumnNames: ["uid"],
                     referencedTableName: "usuarios",
                 }),

@@ -1,4 +1,10 @@
-import { HttpResponse, HttpRequest, ok, serverError, notFound } from "../../../core";
+import {
+    HttpResponse,
+    HttpRequest,
+    serverError,
+    notFound,
+    ok,
+} from "../../../core";
 import UsersRepository from "../repositories/UsersRepositories";
 import { MVCController } from "../../../core/contracts";
 
@@ -35,10 +41,7 @@ export default class UsersController implements MVCController {
 
     public async update(req: HttpRequest): Promise<HttpResponse> {
         try {
-            const usuario = await this.#repo.update(
-                req.params.uid,
-                req.body
-            );
+            const usuario = await this.#repo.update(req.params.uid, req.body);
 
             return ok(usuario);
         } catch {
@@ -60,10 +63,7 @@ export default class UsersController implements MVCController {
 
     public async login(req: HttpRequest): Promise<HttpResponse | any> {
         try {
-            const validacao = await this.#repo.login(
-                req.params,
-                req.body
-            );
+            const validacao = await this.#repo.login(req.body);            
 
             if (!validacao) {
                 return notFound();
@@ -75,7 +75,7 @@ export default class UsersController implements MVCController {
         }
     }
 
-    async index(){
+    async index() {
         return serverError();
     }
 }

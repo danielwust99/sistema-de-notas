@@ -61,7 +61,7 @@ class UsersController {
     }
     async login(req) {
         try {
-            const validacao = await __classPrivateFieldGet(this, _UsersController_repo, "f").login(req.params, req.body);
+            const validacao = await __classPrivateFieldGet(this, _UsersController_repo, "f").login(req.body);
             if (!validacao) {
                 return core_1.notFound();
             }

@@ -1,4 +1,3 @@
-import { UserIdentifyMiddleware } from "../../users/middlewares/UserIdentify";
 import { UsersLoginMiddleware } from "../middlewares/UsersLoginMiddleware";
 import { UserInputMiddleware } from "../../users/middlewares/UserInput";
 import { LoginInputMiddleware } from "../middlewares/LoginInput";
@@ -29,25 +28,22 @@ export default class UsersRoutes {
         routes.get(
             "/usuarios/:uid",
             [
-                middlewareAdapter(new UserIdentifyMiddleware()),
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.SHOW)
         );
         routes.put(
             "/usuarios/:uid",
             [
-                middlewareAdapter(new UserIdentifyMiddleware()),
                 middlewareAdapter(new UserInputMiddleware()),
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.UPDATE)
         );
         routes.delete(
             "/usuarios/:uid",
             [
-                middlewareAdapter(new UserIdentifyMiddleware()),
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.DELETE)
         );

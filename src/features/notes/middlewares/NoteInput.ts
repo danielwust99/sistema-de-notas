@@ -1,5 +1,13 @@
-import { HttpResponse, InvalidParam, HttpRequest, badRequest, ok } from "../../../core";
+import {
+    HttpResponse,
+    InvalidParam,
+    HttpRequest,
+    badRequest,
+    notFound,
+    ok,
+} from "../../../core";
 import { Notes } from "../../../core/data/database/entities";
+import { Users } from "../../../core/data/database/entities";
 
 export class NoteInputMiddleware {
     async handle(req: HttpRequest): Promise<HttpResponse> {
@@ -15,7 +23,14 @@ export class NoteInputMiddleware {
             usuarioUid == ""
         ) {
             return badRequest(new InvalidParam("dados invalidos"));
+        } else {
+            const usuario = await Users.findOne(usuarioUid);
+            
+            if (!usuario) {
+                return notFound();
+            }
         }
+
         return ok({});
     }
 }

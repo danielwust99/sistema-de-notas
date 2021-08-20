@@ -10,7 +10,7 @@ require("dotenv").config();
 const secret = process.env.SECRET_HASH;
 class UsersLoginMiddleware {
     async handle(req) {
-        const { authorization } = req.headers; // checar
+        const { authorization } = req.headers;
         if (!authorization) {
             return core_1.unauthorized(new core_1.Unauthorized("Sessão Invalida"));
         }
@@ -18,7 +18,7 @@ class UsersLoginMiddleware {
         try {
             const data = jsonwebtoken_1.default.verify(token, secret);
             const { uid } = data;
-            req.userUid = uid;
+            req.headers.userUid = uid;
             return core_1.ok({});
         }
         catch {

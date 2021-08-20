@@ -4,11 +4,12 @@ export interface HttpResponse {
 }
 
 export interface HttpRequest {
-    body: any;
     params: any;
+    body: any;
 }
 
 export interface HttpMiddleware {
-    body: any;
+    // params: any;
     headers: any;
+    body: any;
 }

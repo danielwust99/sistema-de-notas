@@ -30,6 +30,7 @@ class NotesController {
             if (!notas) {
                 return core_1.notFound();
             }
+            await __classPrivateFieldGet(this, _NotesController_cache, "f").set(`notas:${req.params.uid}`, notas);
             return core_1.ok(notas);
         }
         catch {
@@ -55,8 +56,8 @@ class NotesController {
     async store(req) {
         try {
             const novaNota = await __classPrivateFieldGet(this, _NotesController_repo, "f").create(req.body);
-            await __classPrivateFieldGet(this, _NotesController_cache, "f").set(`nota:${novaNota.uid}`, novaNota);
-            await __classPrivateFieldGet(this, _NotesController_cache, "f").del("nota:all");
+            await __classPrivateFieldGet(this, _NotesController_cache, "f").set(`nota:${req.body.usuarioUid}`, novaNota);
+            await __classPrivateFieldGet(this, _NotesController_cache, "f").del(`notas:${req.body.usuarioUid}`);
             return core_1.ok(novaNota);
         }
         catch {
@@ -71,7 +72,7 @@ class NotesController {
                 return core_1.notFound();
             }
             await __classPrivateFieldGet(this, _NotesController_cache, "f").set(`nota:${uid}`, notaAlvo);
-            await __classPrivateFieldGet(this, _NotesController_cache, "f").del(`notas:${uid}`);
+            await __classPrivateFieldGet(this, _NotesController_cache, "f").del(`notas:${notaAlvo.usuarioUid}`);
             return core_1.ok(notaAlvo);
         }
         catch {

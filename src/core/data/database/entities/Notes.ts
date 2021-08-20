@@ -31,9 +31,9 @@ export class Notes extends BaseEntity {
     @Column({ name: "updated_at" })
     updatedAt?: Date;
 
-    @OneToMany((type) => Users, (usuarios) => usuarios.notas)
+    @OneToMany((type) => Users, (usuario) => usuario.notas)
     @JoinColumn({ name: "usuario_uid", referencedColumnName: "uid" })
-    usuarios?: Users;
+    usuario?: Users;
 
     constructor(
         uid: string,

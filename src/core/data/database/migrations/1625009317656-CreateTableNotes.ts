@@ -30,7 +30,7 @@ export class CreateTableNotes1625009317656 implements MigrationInterface {
                         isNullable: false,
                     },
                     {
-                        name: "usuarios_uid",
+                        name: "usuario_uid",
                         type: "uuid",
                         isNullable: false,
                     },
@@ -47,7 +47,7 @@ export class CreateTableNotes1625009317656 implements MigrationInterface {
                 ],
                 foreignKeys: [
                     new TableForeignKey({
-                        columnNames: ["usuarios_uid"],
+                        columnNames: ["usuario_uid"],
                         referencedColumnNames: ["uid"],
                         referencedTableName: "usuarios",
                     }),

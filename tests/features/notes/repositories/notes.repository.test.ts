@@ -1,6 +1,7 @@
 import NotesRepository from "../../../../src/features/notes/repositories/NotesRepositories";
-import { Users, Notes } from '../../../../src/core/data/database/entities';
-import Database from '../../../../src/core/data/connections/Database'
+import { Users, Notes } from "../../../../src/core/data/database/entities";
+import Database from "../../../../src/core/data/connections/Database";
+import { v4 as uuid } from "uuid";
 
 const criarUsuario = async (): Promise<Users> => {
     return Users.create({
@@ -14,6 +15,7 @@ const criarNota = async (): Promise<Notes> => {
     const usuario = await criarUsuario();
 
     return Notes.create({
+        uid: uuid(),
         descricao: "qualquer_descricao",
         detalhamento: "qualquer_detalhamento",
         usuarioUid: usuario.uid,
@@ -24,6 +26,7 @@ const modeloNota = async () => {
     const usuario = await criarUsuario();
 
     return {
+        uid: "qualquer_uid",
         descricao: "qualquer_descricao",
         detalhamento: "qualquer_detalhamento",
         usuarioUid: usuario.uid,
@@ -44,7 +47,7 @@ describe("Repositorio de Notas", () => {
 
     describe("Criar", () => {
         test("Deve criar uma nova nota quando passar parametros corretos", async () => {
-            const dados = await criarNota();
+            const dados: any = await modeloNota();
             const nota = new NotesRepository();
             const result = await nota.create(dados);
 
@@ -52,37 +55,6 @@ describe("Repositorio de Notas", () => {
             expect(result.uid).toBeTruthy();
             expect(result.descricao).toEqual(dados.descricao);
             expect(result.detalhamento).toEqual(dados.detalhamento);
-        });
-    });
-
-    describe("Pegar todas", () => {
-        test("Deve obter todas notas de um usuario", async () => {
-            const nota = await criarNota();
-
-            jest.spyOn(NotesRepository.prototype, "getAll").mockResolvedValue(
-                [nota]
-            );
-            
-            const preparacao = new NotesRepository();
-            const resultado = await preparacao.getAll(nota.usuarioUid);
-
-            expect(resultado.length > 0).toBeTruthy();
-        });
-    });
-
-    describe("Mostrar uma", () => {
-        test("Deve retornar uma quando passado uid valido", async () => {
-            const nota = await criarNota();
-
-            jest.spyOn(NotesRepository.prototype, "getOne").mockResolvedValue(
-                nota
-            );
-
-            const preparacao = new NotesRepository();
-            const resultado = await preparacao.getOne(nota.uid);
-
-            expect(resultado).toBeTruthy();     
-            expect(resultado.uid).toEqual(nota.uid);
         });
     });
 });

@@ -57,10 +57,10 @@ __decorate([
     __metadata("design:type", Date)
 ], Notes.prototype, "updatedAt", void 0);
 __decorate([
-    typeorm_1.OneToMany((type) => Users_1.Users, (usuarios) => usuarios.notas),
+    typeorm_1.OneToMany((type) => Users_1.Users, (usuario) => usuario.notas),
     typeorm_1.JoinColumn({ name: "usuario_uid", referencedColumnName: "uid" }),
     __metadata("design:type", Users_1.Users)
-], Notes.prototype, "usuarios", void 0);
+], Notes.prototype, "usuario", void 0);
 __decorate([
     typeorm_1.BeforeInsert(),
     __metadata("design:type", Function),

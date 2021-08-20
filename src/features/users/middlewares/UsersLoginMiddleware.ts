@@ -1,4 +1,4 @@
-import { HttpResponse, unauthorized, Unauthorized, HttpRequest, badRequest, ok } from "../../../core";
+import { HttpResponse, HttpMiddleware, unauthorized, Unauthorized, HttpRequest, badRequest, ok } from "../../../core";
 import jwt from "jsonwebtoken";
 
 require("dotenv").config();
@@ -11,7 +11,7 @@ interface TokenPayload {
 }
 
 export class UsersLoginMiddleware {
-    async handle(req: HttpRequest): Promise<HttpResponse> {
+    async handle(req: HttpMiddleware): Promise<HttpResponse> {
         const { authorization } = req.headers;
 
         if (!authorization) {
@@ -25,7 +25,7 @@ export class UsersLoginMiddleware {
 
             const { uid } = data as TokenPayload;
 
-            req.userUid = uid;
+            req.headers.userUid = uid;
 
             return ok({});
         } catch {

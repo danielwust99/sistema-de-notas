@@ -5,7 +5,6 @@ const enums_1 = require("./../enums");
 const routerAdapter = (controller) => {
     return async (request, response) => {
         const httpRequest = {
-            userUid: request.userUid,
             body: request.body,
             params: request.params,
         };
@@ -24,7 +23,6 @@ exports.routerAdapter = routerAdapter;
 const routerMvcAdapter = (controller, type) => {
     return async (request, response) => {
         const httpRequest = {
-            userUid: request.userUid,
             body: request.body,
             params: request.params,
         };

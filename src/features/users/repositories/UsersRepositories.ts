@@ -62,7 +62,7 @@ export default class UsersRepository {
         return true;
     }
 
-    async login(uid: string, dados: Users): Promise<any> {
+    async login(dados: Users): Promise<any> {
         const usuario = await Users.findOne({
             where: {
                 usuario: dados.usuario,

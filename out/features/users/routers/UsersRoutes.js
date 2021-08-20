@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const UsersIdentify_1 = require("../../users/middlewares/UsersIdentify");
 const UsersLoginMiddleware_1 = require("../middlewares/UsersLoginMiddleware");
 const UserInput_1 = require("../../users/middlewares/UserInput");
 const LoginInput_1 = require("../middlewares/LoginInput");
@@ -20,16 +19,13 @@ class UsersRoutes {
         routes.post("/login", [core_2.middlewareAdapter(new LoginInput_1.LoginInputMiddleware())], core_1.routerMvcAdapter(controlador(), core_1.EMVC.LOGIN));
         routes.post("/usuarios", [core_2.middlewareAdapter(new UserInput_1.UserInputMiddleware())], core_1.routerMvcAdapter(controlador(), core_1.EMVC.STORE));
         routes.get("/usuarios/:uid", [
-            core_2.middlewareAdapter(new UsersIdentify_1.UsersIdentifyMiddleware()),
             core_2.middlewareAdapter(new UsersLoginMiddleware_1.UsersLoginMiddleware()),
         ], core_1.routerMvcAdapter(controlador(), core_1.EMVC.SHOW));
         routes.put("/usuarios/:uid", [
-            core_2.middlewareAdapter(new UsersIdentify_1.UsersIdentifyMiddleware()),
             core_2.middlewareAdapter(new UserInput_1.UserInputMiddleware()),
             core_2.middlewareAdapter(new UsersLoginMiddleware_1.UsersLoginMiddleware()),
         ], core_1.routerMvcAdapter(controlador(), core_1.EMVC.UPDATE));
         routes.delete("/usuarios/:uid", [
-            core_2.middlewareAdapter(new UsersIdentify_1.UsersIdentifyMiddleware()),
             core_2.middlewareAdapter(new UsersLoginMiddleware_1.UsersLoginMiddleware()),
         ], core_1.routerMvcAdapter(controlador(), core_1.EMVC.DELETE));
     }

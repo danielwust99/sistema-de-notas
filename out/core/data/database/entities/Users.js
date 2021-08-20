@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Users.prototype, "updatedAt", void 0);
 __decorate([
-    typeorm_1.OneToMany((type) => Notes_1.Notes, (notas) => notas.usuarios),
+    typeorm_1.OneToMany((type) => Notes_1.Notes, (notas) => notas.usuario),
     __metadata("design:type", Array)
 ], Users.prototype, "notas", void 0);
 __decorate([

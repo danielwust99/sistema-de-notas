@@ -1,4 +1,3 @@
-import { UserIdentifyMiddleware } from "../../users/middlewares/UserIdentify";
 import { NoteInputMiddleware } from "../../notes/middlewares/NoteInput";
 import { UsersLoginMiddleware } from "../../users/middlewares/UsersLoginMiddleware";
 import { CacheRepository } from "../../../core/data/repositories";
@@ -22,7 +21,6 @@ export default class NotesRoutes {
             "/notas/:uid/todas",
             [
                 // middlewareAdapter(new UsersLoginMiddleware()),
-                // middlewareAdapter(new UserIdentifyMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.INDEX)
         );
@@ -30,24 +28,22 @@ export default class NotesRoutes {
             "/notas/:uid",
             [
                 // middlewareAdapter(new UsersLoginMiddleware()),
-                middlewareAdapter(new UserIdentifyMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.SHOW)
         );
         routes.post(
             "/notas/",
             [
-                // middlewareAdapter(new NoteInputMiddleware()),
-                middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new NoteInputMiddleware()),
+                // middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.STORE)
         );
         routes.put(
             "/notas/:uid",
             [
-                middlewareAdapter(new NoteInputMiddleware()),
+                // middlewareAdapter(new NoteInputMiddleware()),
                 // middlewareAdapter(new UsersLoginMiddleware()),
-                middlewareAdapter(new UserIdentifyMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.UPDATE)
         );
@@ -55,7 +51,6 @@ export default class NotesRoutes {
             "/notas/:uid",
             [
                 // middlewareAdapter(new UsersLoginMiddleware()),
-                middlewareAdapter(new UserIdentifyMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.DELETE)
         );
@@ -63,7 +58,6 @@ export default class NotesRoutes {
             "/notas/:uid/todas",
             [
                 // middlewareAdapter(new UsersLoginMiddleware()),
-                middlewareAdapter(new UserIdentifyMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.DELETEALL)
         );

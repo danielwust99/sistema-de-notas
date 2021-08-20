@@ -30,7 +30,7 @@ export class Users extends BaseEntity {
     @Column({ name: "updated_at" })
     updatedAt?: Date;
 
-    @OneToMany((type) => Notes, (notas) => notas.usuarios)
+    @OneToMany((type) => Notes, (notas) => notas.usuario)
     notas?: Notes[];
 
     constructor(

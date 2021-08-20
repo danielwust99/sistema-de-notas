@@ -46,7 +46,7 @@ class UsersRepository {
         }
         return true;
     }
-    async login(uid, dados) {
+    async login(dados) {
         const usuario = await Users_1.Users.findOne({
             where: {
                 usuario: dados.usuario,
