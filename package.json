@@ -40,7 +40,8 @@
         "typescript": "^4.3.5"
     },
     "scripts": {
-        "build": "npx tsc",
+        "build": "npx build --output public",
+        "build:dev": "npx tsc",
         "start": "ts-node --transpile-only --files ./src/server.ts reflect-metadata tsc node",
         "start:local": "node -r dotenv/config ./out/server",
         "dev": "ts-node-dev --respawn --transpile-only --files ./src/server.ts",
