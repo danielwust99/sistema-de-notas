@@ -20,19 +20,20 @@ export default class NotesController implements MVCController {
 
     public async index(req: HttpRequest): Promise<HttpResponse> {
         try {
-            const cache = await this.#cache.get(`notas:${req.params.uid}`);
+            const { uid } = req.params;
+            const cache = await this.#cache.get(`notas:${uid}`);
 
             if (cache) {
                 return ok(cache);
             }
 
-            const notas = await this.#repo.getAll(req.params.uid);
+            const notas = await this.#repo.getAll(uid);
 
             if (!notas) {
                 return notFound();
             }
 
-            await this.#cache.set(`notas:${req.params.uid}`, notas);
+            await this.#cache.set(`notas:${uid}`, notas);
 
             return ok(notas);
         } catch {
@@ -92,37 +93,37 @@ export default class NotesController implements MVCController {
     }
 
     public async delete(req: HttpRequest): Promise<HttpResponse> {
-        try {
-            const { uid } = req.params;
-            const notaAlvo = await this.#repo.delete(uid);
+        const { uid } = req.params;
+        
+        if (!req.params.limpar) {
+            try {
+                const notaAlvo = await this.#repo.delete(uid);
 
-            if (!notaAlvo) {
-                return notFound();
+                if (!notaAlvo) {
+                    return notFound();
+                }
+
+                await this.#cache.del(`nota:${uid}`);
+                await this.#cache.del(`notas:${notaAlvo}`);
+
+                return ok({ msg: "success" });
+            } catch {
+                return serverError();
             }
+        } else {
+            try {
+                const notasAlvo = await this.#repo.deleteAll(uid);
 
-            await this.#cache.del(`nota:${uid}`);
-            await this.#cache.del(`notas:${notaAlvo}`);
+                if (!notasAlvo) {
+                    return notFound();
+                }
 
-            return ok({ msg: "success" });
-        } catch {
-            return serverError();
-        }
-    }
+                await this.#cache.del(`notas:${uid}`);
 
-    public async deleteAll(req: HttpRequest): Promise<HttpResponse> {
-        try {
-            const { uid } = req.params;
-            const notasAlvo = await this.#repo.deleteAll(uid);
-
-            if (!notasAlvo) {
-                return notFound();
+                return ok({ msg: "success" });
+            } catch {
+                return serverError();
             }
-
-            await this.#cache.del(`notas:${uid}`);
-
-            return ok({ msg: "success" });
-        } catch {
-            return serverError();
         }
     }
 

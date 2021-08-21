@@ -1,5 +1,4 @@
 export enum EMVC {
-    DELETEALL,
     DELETE,
     UPDATE,
     INDEX,

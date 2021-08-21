@@ -47,9 +47,6 @@ export const routerMvcAdapter = (controller: MVCController, type: EMVC) => {
             case EMVC.DELETE:
                 httpResponse = await controller.delete(httpRequest);
                 break;
-            case EMVC.DELETEALL:
-                httpResponse = await controller.delete(httpRequest);
-                break;
             case EMVC.LOGIN:
                 httpResponse = await controller.login(httpRequest);
                 break;

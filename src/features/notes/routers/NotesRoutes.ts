@@ -55,11 +55,11 @@ export default class NotesRoutes {
             routerMvcAdapter(controlador(), EMVC.DELETE)
         );
         routes.delete(
-            "/notas/:uid/todas",
+            "/notas/:uid/:limpar",
             [
                 // middlewareAdapter(new UsersLoginMiddleware()),
             ],
-            routerMvcAdapter(controlador(), EMVC.DELETEALL)
+            routerMvcAdapter(controlador(), EMVC.DELETE)
         );
     }
 }

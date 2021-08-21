@@ -26,7 +26,7 @@ export default class NotesRepository {
 
     async getOne(uid: string): Promise<Notes | null> {
         const nota = await Notes.findOne(uid);
-        
+
         if (!nota) {
             return null;
         }
@@ -71,9 +71,9 @@ export default class NotesRepository {
             return false;
         }
 
-        for (let nota in notasAlvo) {
-            await Notes.delete(nota[0]);
-        }
+        notasAlvo.forEach(async (uid) => {
+            await Notes.delete(uid);
+        });
 
         return true;
     }
