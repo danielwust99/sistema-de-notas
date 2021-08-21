@@ -57,4 +57,17 @@ describe("Repositorio de Notas", () => {
             expect(result.detalhamento).toEqual(dados.detalhamento);
         });
     });
+    // describe("Criar Nota", () => {
+    //     test("should return code 500 when throw any exception", async () => {
+    //         jest.spyOn(NotesRepository.prototype, "create").mockRejectedValue(
+    //             new Error()
+    //         );
+
+    //         const nota = await criarNota();
+    //         const sistema = new NotesRepository();
+    //         const resultado = await sistema.create(nota);
+
+    //         expect(resultado).toThrow(Error);
+    //     });
+    // });
 });

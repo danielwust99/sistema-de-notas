@@ -10,23 +10,22 @@ jest.mock("ioredis");
 
 const criarUsuario = async (): Promise<Users> => {
     return Users.create({
-        nome: "qualquer_nome",
-        usuario: "qualquer_usuario",
-        senha: "qualquer_senha",
+        nome: "any_nome",
+        usuario: "any_usuario",
+        senha: "any_senha",
     }).save();
 };
 
 const criarNota = async (): Promise<Notes> => {
     const usuario = await criarUsuario();
-
     return Notes.create({
-        detalhamento: "qualquer_detalhamento",
-        descricao: "qualquer_descricao",
+        detalhamento: "any_detalhamento",
+        descricao: "any_descricao",
         usuarioUid: usuario.uid,
     }).save();
 };
 
-describe("Note Routes", () => {
+describe("Users Routes", () => {
     const server = new App().server;
 
     beforeEach(async () => {
@@ -48,82 +47,75 @@ describe("Note Routes", () => {
     });
 
     afterAll(async () => {
-        new Database().closeConnection();
+        await new Database().closeConnection();
     });
 
-    describe("Post Notes", () => {
-        test("Deve retornar codigo 400 quando nao tiver detalhamento", async () => {
-            const user = await criarUsuario();
+    describe("Post Nota", () => {
+        test("Deve retornar codigo 400 ao salvar uma nota com invalido detalhamento", async () => {
+            const usuario = await criarUsuario();
 
             await request(server)
                 .post("/notas")
                 .send({
-                    descricao: "qualquer_descricao",
-                    startAt: new Date(Date.now()).toLocaleDateString(),
-                    finishAt: new Date(Date.now()).toLocaleDateString(),
-                    usuarioUid: user.uid,
+                    detalhamento: "",
+                    descricao: "any_descricao",
+                    usuarioUid: usuario.uid,
                 })
                 .expect(400, { error: "Erro: dados invalidos" });
         });
 
-        test("Deve retornar codigo 200 quando salvar nota", async () => {
-            const user = await criarUsuario();
-
+        test("Deve retornar codigo 404 com usuario invalido", async () => {
             await request(server)
                 .post("/notas")
                 .send({
-                    detalhamento: "qualquer_nome",
-                    descricao: "qualquer_descricao",
-                    startAt: new Date(Date.now()).toLocaleDateString(),
-                    finishAt: new Date(Date.now()).toLocaleDateString(),
-                    usuarioUid: user.uid,
+                    detalhamento: "any_name",
+                    descricao: "any_descricao",
+                    usuarioUid: 'id_inexistente',
                 })
-                .expect(200)
-                // .expect((request) => {
-                //     expect(request.body.usuarioUid).toEqual(user.uid);
-                // });
+                .expect(404)
         });
-        
-        test("Deve retornar codigo 404 quando usuario nao existir", async () => {
-            await criarNota();
-            
+
+        test("Deve retornar codigo 404 quando usuarioUid eh invalido", async () => {
             await request(server)
                 .post("/notas")
                 .send({
-                    descricao: "qualquer_descricao",
-                    detalhamento: "qualquer_detalhamento",
-                    startAt: new Date(Date.now()).toLocaleDateString(),
-                    finishAt: new Date(Date.now()).toLocaleDateString(),
-                    usuarioUid: "Vini-eh-o-usuario-bugado"
-                }).expect(404);
+                    detalhamento: "any_detalhamento",
+                    descricao: "any_descricao",
+                    usuarioUid: "Fake_Uid",
+                })
+                .expect(404);
         });
     });
 
-    describe("/Notas", () => {
+    describe("/Get Nota", () => {
         test("Deve retornar codigo 200 com as notas", async () => {
             const nota = await criarNota();
 
-            jest.spyOn(NotesRepository.prototype, "getAll")
-            .mockResolvedValue([nota]);
+            jest.spyOn(NotesRepository.prototype, "getAll").mockResolvedValue([
+                nota,
+            ]);
 
-            await request(server).get(`/notas/${nota.usuarioUid}/todas`)
-            .expect(200);
+            await request(server)
+                .get(`/notas/${nota.usuarioUid}/todas`)
+                .send()
+                .expect(200);
         });
     });
 
-    describe("/Nota:uid", () => {
+    describe("/Get Nota:uid", () => {
         test("Deve retornar codigo 200 com qualquer nota", async () => {
             const nota = await criarNota();
 
-            jest.spyOn(NotesRepository.prototype, "getOne")
-            .mockResolvedValue(nota);
+            jest.spyOn(NotesRepository.prototype, "getOne").mockResolvedValue(
+                nota
+            );
 
             await request(server)
-                .get(`/notas/${nota.uid}`)
+                .get(`/notas/${nota.usuarioUid}`)
                 .send()
                 .expect(200)
                 .expect((request) => {
-                    expect(request.body.uid).toEqual(nota.uid);
+                    expect(request.body.usuarioUid).toEqual(nota.usuarioUid);
                 });
         });
     });

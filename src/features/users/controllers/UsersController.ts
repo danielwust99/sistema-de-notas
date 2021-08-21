@@ -17,9 +17,9 @@ export default class UsersController implements MVCController {
 
     public async store(req: HttpRequest): Promise<HttpResponse> {
         try {
-            const novoUsuario = await this.#repo.create(req.body);
+            await this.#repo.create(req.body);
 
-            return ok(novoUsuario);
+            return ok(true);
         } catch {
             return serverError();
         }

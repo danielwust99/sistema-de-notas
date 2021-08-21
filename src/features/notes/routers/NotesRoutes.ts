@@ -1,5 +1,6 @@
-import { NoteInputMiddleware } from "../../notes/middlewares/NoteInput";
+import { UserNotExistMiddleware } from "../../users/middlewares/UserNotExist";
 import { UsersLoginMiddleware } from "../../users/middlewares/UsersLoginMiddleware";
+import { NoteInputMiddleware } from "../../notes/middlewares/NoteInput";
 import { CacheRepository } from "../../../core/data/repositories";
 import NotesRepository from "../repositories/NotesRepositories";
 import NotesController from "../controllers/NotesController";
@@ -34,6 +35,7 @@ export default class NotesRoutes {
         routes.post(
             "/notas/",
             [
+                middlewareAdapter(new UserNotExistMiddleware()),
                 middlewareAdapter(new NoteInputMiddleware()),
                 // middlewareAdapter(new UsersLoginMiddleware()),
             ],
@@ -42,7 +44,7 @@ export default class NotesRoutes {
         routes.put(
             "/notas/:uid",
             [
-                // middlewareAdapter(new NoteInputMiddleware()),
+                middlewareAdapter(new NoteInputMiddleware()),
                 // middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.UPDATE)

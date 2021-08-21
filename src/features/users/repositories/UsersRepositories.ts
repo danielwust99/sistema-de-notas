@@ -20,11 +20,11 @@ export default class UsersRepository {
         return Object.assign({}, dados, novoUsuario);
     }
 
-    async getOne(uid: string): Promise<Users> {
+    async getOne(uid: string): Promise<Users | null> {
         const user = await Users.findOne(uid);
 
         if (!user) {
-            throw new Error();
+            return null;
         }
 
         return user;

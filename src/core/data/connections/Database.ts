@@ -24,6 +24,12 @@ export default class Database {
             }
         }
     }
-    
-    public closeConnection() {}
+
+    public async closeConnection(): Promise<void> {
+        if (Database.connection === null || Database.connection === undefined) {
+            throw new Error("CONEXAO_DATABASE_NAO_ABERTA");
+        } else {
+            await Database.connection.close();
+        }
+    }
 }
