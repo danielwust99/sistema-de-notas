@@ -25,7 +25,7 @@ const criarNota = async (): Promise<Notes> => {
     }).save();
 };
 
-describe("Users Routes", () => {
+describe("Rotas de Usuario", () => {
     const server = new App().server;
 
     beforeEach(async () => {
@@ -50,7 +50,7 @@ describe("Users Routes", () => {
         await new Database().closeConnection();
     });
 
-    describe("Post Nota", () => {
+    describe("POST - Notas", () => {
         test("Deve retornar codigo 400 ao salvar uma nota com invalido detalhamento", async () => {
             const usuario = await criarUsuario();
 
@@ -74,20 +74,9 @@ describe("Users Routes", () => {
                 })
                 .expect(404)
         });
-
-        test("Deve retornar codigo 404 quando usuarioUid eh invalido", async () => {
-            await request(server)
-                .post("/notas")
-                .send({
-                    detalhamento: "any_detalhamento",
-                    descricao: "any_descricao",
-                    usuarioUid: "Fake_Uid",
-                })
-                .expect(404);
-        });
     });
 
-    describe("/Get Nota", () => {
+    describe("GET - Notas", () => {
         test("Deve retornar codigo 200 com as notas", async () => {
             const nota = await criarNota();
 
@@ -102,7 +91,7 @@ describe("Users Routes", () => {
         });
     });
 
-    describe("/Get Nota:uid", () => {
+    describe("GET - Nota Única", () => {
         test("Deve retornar codigo 200 com qualquer nota", async () => {
             const nota = await criarNota();
 
@@ -112,7 +101,7 @@ describe("Users Routes", () => {
 
             await request(server)
                 .get(`/notas/${nota.usuarioUid}`)
-                .send()
+                .send(nota)
                 .expect(200)
                 .expect((request) => {
                     expect(request.body.usuarioUid).toEqual(nota.usuarioUid);

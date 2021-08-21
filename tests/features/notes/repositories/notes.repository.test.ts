@@ -15,7 +15,6 @@ const criarNota = async (): Promise<Notes> => {
     const usuario = await criarUsuario();
 
     return Notes.create({
-        uid: uuid(),
         descricao: "qualquer_descricao",
         detalhamento: "qualquer_detalhamento",
         usuarioUid: usuario.uid,
@@ -45,29 +44,61 @@ describe("Repositorio de Notas", () => {
         new Database().closeConnection();
     });
 
-    describe("Criar", () => {
-        test("Deve criar uma nova nota quando passar parametros corretos", async () => {
-            const dados: any = await modeloNota();
-            const nota = new NotesRepository();
-            const result = await nota.create(dados);
-
-            expect(result).toBeTruthy();
-            expect(result.uid).toBeTruthy();
-            expect(result.descricao).toEqual(dados.descricao);
-            expect(result.detalhamento).toEqual(dados.detalhamento);
+    describe("Project Repository", () => {
+        beforeAll(async () => {
+            await new Database().openConnection();
         });
+        beforeEach(async () => {
+            await Notes.clear();
+            await Users.clear();
+        });
+        afterAll(async () => {
+            await new Database().closeConnection();
+        });
+
+        describe("Criar", () => {
+            test("Deve criar uma nova nota quando passar parametros corretos", async () => {
+                const dados: any = await modeloNota();
+                const nota = new NotesRepository();
+                const resultado = await nota.create(dados);
+
+                expect(resultado).toBeTruthy();
+                expect(resultado.uid).toBeTruthy();
+                expect(resultado.descricao).toEqual(dados.descricao);
+                expect(resultado.detalhamento).toEqual(dados.detalhamento);
+            });
+        });
+
+        // describe("Obter Uma", () => {
+        //     test("Mostrar uma nota valida", async () => {
+        //         const nota = await criarNota();
+
+        //         jest.spyOn(
+        //             NotesRepository.prototype,
+        //             "getOne"
+        //         ).mockResolvedValue(nota);
+
+        //         const sistema = new NotesRepository();
+        //         const resultado = await sistema.getOne(nota.uid);
+
+        //         expect(resultado).toBeTruthy();
+        //     });
+        // });
+
+        // describe("Obter Todas", () => {
+        //     test("Mostrar todas notas validas", async () => {
+        //         const nota = await criarNota();
+
+        //         jest.spyOn(
+        //             NotesRepository.prototype,
+        //             "getAll"
+        //         ).mockResolvedValue([nota]);
+
+        //         const sistema = new NotesRepository();
+        //         const resultado = await sistema.getAll(nota.usuarioUid);
+
+        //         expect(resultado).toBeTruthy();
+        //     });
+        // });
     });
-    // describe("Criar Nota", () => {
-    //     test("should return code 500 when throw any exception", async () => {
-    //         jest.spyOn(NotesRepository.prototype, "create").mockRejectedValue(
-    //             new Error()
-    //         );
-
-    //         const nota = await criarNota();
-    //         const sistema = new NotesRepository();
-    //         const resultado = await sistema.create(nota);
-
-    //         expect(resultado).toThrow(Error);
-    //     });
-    // });
 });

@@ -35,7 +35,7 @@ describe("User Controller", () => {
         jest.resetAllMocks();
     });
 
-    describe("Store", () => {
+    describe("Salvamento", () => {
         test("Deve chamar UsersController ao passar valores corretos", async () => {
             const createSpy = jest.spyOn(UsersController.prototype, "store");
             const sut = criarCRUD();
