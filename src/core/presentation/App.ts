@@ -1,5 +1,5 @@
-import UsersRoutes from "../../features/users/routers/UsersRoutes";
-import NotesRoutes from "../../features/notes/routers/NotesRoutes";
+import UsersRoutes from "../../features/users/infra/routers/UsersRoutes";
+import NotesRoutes from "../../features/notes/infra/routers/NotesRoutes";
 import express, { Router, Request, Response } from "express";
 import cors from "cors";
 

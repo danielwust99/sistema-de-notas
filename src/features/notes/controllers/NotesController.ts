@@ -5,9 +5,9 @@ import {
     serverError,
     notFound,
 } from "../../../core";
-import { CacheRepository } from "../../../core/data/repositories";
-import NotesRepository from "../repositories/NotesRepositories";
-import { MVCController } from "../../../core/contracts";
+import { CacheRepository } from "../../../core";
+import NotesRepository from "../infra/repositories/NotesRepositories";
+import { MVCController } from "../../../core";
 
 export default class NotesController implements MVCController {
     readonly #repo: NotesRepository;
