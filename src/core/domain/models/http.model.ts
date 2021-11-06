@@ -9,7 +9,7 @@ export interface HttpRequest {
 }
 
 export interface HttpMiddleware {
-    params?: any;
+    params?: any; // nao necessario
     headers: any;
     body: any;
 }
