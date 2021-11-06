@@ -1,4 +1,4 @@
-import Database from "./core/data/connections/Database";
+import Database from "./core/infra/data/connections/Database";
 import App from "./core/presentation/App";
 import dotenv from "dotenv";
 import "reflect-metadata";

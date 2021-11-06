@@ -6,8 +6,8 @@ if (process.env.NODE_ENV?.toLocaleLowerCase() === "test") {
     config = {
         type: "sqlite",
         database: "./testedb.sql",
-        entities: ["src/core/data/database/entities/**/*"],
-        migrations: ["src/core/data/database/migrations/**/*"],
+        entities: ["src/core/infra/data/database/entities/**/*"],
+        migrations: ["src/core/infra/data/database/migrations/**/*"],
     };
 } else {
     config = {
@@ -19,11 +19,11 @@ if (process.env.NODE_ENV?.toLocaleLowerCase() === "test") {
         database: process.env.DB_DATABASE,
         synchronize: false,
         logging: false,
-        entities: ["src/core/data/database/entities/**/*"],
-        migrations: ["src/core/data/database/migrations/**/*"],
+        entities: ["src/core/infra/data/database/entities/**/*"],
+        migrations: ["src/core/infra/data/database/migrations/**/*"],
         cli: {
-            entitiesDir: "src/core/data/database/entities",
-            migrationsDir: "src/core/data/database/migrations",
+            entitiesDir: "src/core/infra/data/database/entities",
+            migrationsDir: "src/core/infra/data/database/migrations",
         },
         extra: {
             ssl: {

@@ -5,8 +5,8 @@ import {
     notFound,
     ok,
 } from "../../../core";
-import UsersRepository from "../repositories/UsersRepositories";
-import { MVCController } from "../../../core/contracts";
+import UsersRepository from "../infra/repositories/UsersRepositories";
+import { MVCController } from "../../../core";
 
 export default class UsersController implements MVCController {
     readonly #repo: UsersRepository;
@@ -20,7 +20,8 @@ export default class UsersController implements MVCController {
             await this.#repo.create(req.body);
 
             return ok(true);
-        } catch {
+        } catch (err) {
+            console.error(err);
             return serverError();
         }
     }
@@ -34,7 +35,8 @@ export default class UsersController implements MVCController {
             }
 
             return ok(usuario);
-        } catch {
+        } catch (err) {
+            console.error(err);
             return serverError();
         }
     }
@@ -44,7 +46,8 @@ export default class UsersController implements MVCController {
             const usuario = await this.#repo.update(req.params.uid, req.body);
 
             return ok(usuario);
-        } catch {
+        } catch (err) {
+            console.error(err);
             return serverError();
         }
     }
@@ -60,7 +63,8 @@ export default class UsersController implements MVCController {
             return ok({
                 Mensagem: `Usuario: ${req.params.uid} deletado com sucesso`,
             });
-        } catch {
+        } catch (err) {
+            console.error(err);
             return serverError();
         }
     }
@@ -74,7 +78,8 @@ export default class UsersController implements MVCController {
             }
 
             return ok(validacao);
-        } catch {
+        } catch (err) {
+            console.error(err);
             return serverError();
         }
     }
