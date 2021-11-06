@@ -1,4 +1,12 @@
-import { HttpResponse, HttpMiddleware, unauthorized, Unauthorized, HttpRequest, badRequest, ok } from "../../../../core";
+import {
+    HttpResponse,
+    HttpMiddleware,
+    unauthorized,
+    Unauthorized,
+    HttpRequest,
+    badRequest,
+    ok,
+} from "../../../../core";
 import jwt from "jsonwebtoken";
 
 require("dotenv").config();
@@ -28,7 +36,8 @@ export class UsersLoginMiddleware {
             req.headers.userUid = uid;
 
             return ok({});
-        } catch {
+        } catch (err) {
+            console.error(err);
             return unauthorized(new Unauthorized("Sessão Invalida"));
         }
     }

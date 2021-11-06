@@ -21,15 +21,14 @@ export default class NotesRoutes {
         routes.get(
             "/notas/:uid/todas",
             [
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.INDEX)
         );
         routes.get(
             "/notas/:uid",
             [
-                middlewareAdapter(new UserNotExistMiddleware()),
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.SHOW)
         );
@@ -38,7 +37,7 @@ export default class NotesRoutes {
             [
                 middlewareAdapter(new UserNotExistMiddleware()),
                 middlewareAdapter(new NoteInputMiddleware()),
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.STORE)
         );
@@ -46,21 +45,21 @@ export default class NotesRoutes {
             "/notas/:uid",
             [
                 middlewareAdapter(new NoteInputMiddleware()),
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.UPDATE)
         );
         routes.delete(
             "/notas/:uid",
             [
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.DELETE)
         );
         routes.delete(
             "/notas/:uid/:limpar",
             [
-                // middlewareAdapter(new UsersLoginMiddleware()),
+                middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.DELETE)
         );
