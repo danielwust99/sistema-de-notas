@@ -1,8 +1,8 @@
-import NotesRepository from "../../../../src/features/notes/repositories/NotesRepositories";
-import NotesRoutes from "../../../../src/features/notes/routers/NotesRoutes";
-import { Users, Notes } from "../../../../src/core/data/database/entities";
-import Database from "../../../../src/core/data/connections/Database";
+import NotesRepository from "../../../../src/features/notes/infra/repositories/NotesRepositories";
+import NotesRoutes from "../../../../src/features/notes/infra/routers/NotesRoutes";
+import Database from "../../../../src/core/infra/data/connections/Database";
 import App from "../../../../src/core/presentation/App";
+import { Users, Notes } from "../../../../src/core";
 import express, { Router } from "express";
 import request from "supertest";
 

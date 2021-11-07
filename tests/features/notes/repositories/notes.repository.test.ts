@@ -1,6 +1,6 @@
-import NotesRepository from "../../../../src/features/notes/repositories/NotesRepositories";
-import { Users, Notes } from "../../../../src/core/data/database/entities";
-import Database from "../../../../src/core/data/connections/Database";
+import NotesRepository from "../../../../src/features/notes/infra/repositories/NotesRepositories";
+import Database from "../../../../src/core/infra/data/connections/Database";
+import { Users, Notes } from "../../../../src/core";
 import { v4 as uuid } from "uuid";
 
 const criarUsuario = async (): Promise<Users> => {

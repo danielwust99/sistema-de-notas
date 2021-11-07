@@ -1,6 +1,6 @@
 import { HttpRequest, serverError, notFound, ok } from "../../../../src/core";
 import UsersController from "../../../../src/features/users/controllers/UsersController";
-import UsersRepository from "../../../../src/features/users/repositories/UsersRepositories";
+import UsersRepository from "../../../../src/features/users/infra/repositories/UsersRepositories";
 
 jest.mock("../../../../src/features/users/controllers/UsersController.ts");
 jest.mock("../../../../src/features/users/repositories/UsersRepositories.ts");
