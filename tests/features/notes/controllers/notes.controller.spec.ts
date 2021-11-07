@@ -1,11 +1,11 @@
-import NotesRepository from "../../../../src/features/notes/repositories/NotesRepositories";
-import { CacheRepository } from "../../../../src/core/data/repositories/cache.repository";
+import NotesRepository from "../../../../src/features/notes/infra/repositories/NotesRepositories";
 import NotesController from "../../../../src/features/notes/controllers/NotesController";
 import { HttpRequest, serverError, notFound, ok } from "../../../../src/core";
-import { Users, Notes } from "../../../../src/core/data/database/entities";
+import { CacheRepository } from "../../../../src/core";
+import { Users, Notes } from "../../../../src/core";
 
-jest.mock("../../../../src/features/notes/repositories/NotesRepositories.ts");
-jest.mock("../../../../src/core/data/repositories/cache.repository");
+jest.mock("../../../../src/features/notes/infra/repositories/NotesRepositories.ts");
+jest.mock("../../../../src/core/infra/data/repositories/cache.repository.ts");
 
 const makeRequestStore = (): HttpRequest => ({
     body: {
