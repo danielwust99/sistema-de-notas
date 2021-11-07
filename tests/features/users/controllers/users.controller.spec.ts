@@ -3,7 +3,7 @@ import UsersController from "../../../../src/features/users/controllers/UsersCon
 import UsersRepository from "../../../../src/features/users/infra/repositories/UsersRepositories";
 
 jest.mock("../../../../src/features/users/controllers/UsersController.ts");
-jest.mock("../../../../src/features/users/repositories/UsersRepositories.ts");
+jest.mock("../../../../src/features/users/infra/repositories/UsersRepositories.ts");
 
 const salvarUsuario = (): HttpRequest => ({
     body: {
