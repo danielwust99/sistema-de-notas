@@ -40,3 +40,8 @@ export class UsersLoginMiddleware {
         }
     }
 }
+
+// outra forma de fazer
+// const token = jwt.sign({ id: user.id }, secret, {    
+//     expiresIn: "1d",
+// });
