@@ -1,18 +1,18 @@
 import {
     Entity,
-    BaseEntity,
-    PrimaryColumn,
     Column,
     OneToMany,
+    BaseEntity,
     BeforeInsert,
     BeforeUpdate,
+    PrimaryColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Notes } from "./Notes";
 
 @Entity({ name: "usuarios" })
 export class Users extends BaseEntity {
-    @PrimaryColumn()
+    @PrimaryColumn('uuid')
     uid?: string;
 
     @Column()
@@ -30,7 +30,7 @@ export class Users extends BaseEntity {
     @Column({ name: "updated_at" })
     updatedAt?: Date;
 
-    @OneToMany((type) => Notes, (notas) => notas.usuarios)
+    @OneToMany(_ => Notes, (nota) => nota.usuario)
     notas?: Notes[];
 
     constructor(

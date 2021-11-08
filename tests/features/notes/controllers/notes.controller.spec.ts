@@ -152,7 +152,7 @@ describe("Project Controller", () => {
                 params: {},
             });
 
-            console.log(result);
+            // console.log(result);
 
             expect(result).toEqual({ body: [], statusCode: 200 });
         });

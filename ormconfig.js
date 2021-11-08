@@ -5,7 +5,7 @@ let config = {};
 if (process.env.NODE_ENV?.toLocaleLowerCase() === "test") {
     config = {
         type: "sqlite",
-        database: "./testedb.sql",
+        database: "./testedb.sqlite",
         entities: ["src/core/infra/data/database/entities/**/*"],
         migrations: ["src/core/infra/data/database/migrations/**/*"],
     };

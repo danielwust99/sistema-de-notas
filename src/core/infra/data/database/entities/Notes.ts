@@ -1,7 +1,7 @@
 import {
     Column,
     Entity,
-    OneToMany,
+    ManyToOne,
     JoinColumn,
     BaseEntity,
     BeforeUpdate,
@@ -13,7 +13,7 @@ import { Users } from "./Users";
 
 @Entity({ name: "notas" })
 export class Notes extends BaseEntity {
-    @PrimaryColumn()
+    @PrimaryColumn('uuid')
     uid?: string;
 
     @Column()
@@ -31,9 +31,9 @@ export class Notes extends BaseEntity {
     @Column({ name: "updated_at" })
     updatedAt?: Date;
 
-    @OneToMany((type) => Users, (usuarios) => usuarios.notas)
+    @ManyToOne(_ => Users, (usuario) => usuario.notas)
     @JoinColumn({ name: "usuario_uid", referencedColumnName: "uid" })
-    usuarios?: Users;
+    usuario?: Users;
 
     constructor(
         uid: string,

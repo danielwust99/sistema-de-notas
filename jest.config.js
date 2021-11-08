@@ -3,7 +3,7 @@ module.exports = {
     coverageDirectory: "coverage",
     coveragePathIgnorePatterns: [
         "\\\\node_modules\\\\",
-        "<rootDir>/src/core/data/database/migrations",
+        "<rootDir>/src/core/infra/data/database/migrations",
     ],
     roots: ["<rootDir>/tests"],
     testEnvironment: "node",

@@ -20,16 +20,16 @@ export default class NotesRoutes {
     public init(routes: Router) {
         routes.get(
             "/notas/:uid/todas",
-            [
-                middlewareAdapter(new UsersLoginMiddleware()),
-            ],
+            // [
+            //     middlewareAdapter(new UsersLoginMiddleware()),
+            // ],
             routerMvcAdapter(controlador(), EMVC.INDEX)
         );
         routes.get(
             "/notas/:uid",
-            [
-                middlewareAdapter(new UsersLoginMiddleware()),
-            ],
+            // [
+            //     middlewareAdapter(new UsersLoginMiddleware()),
+            // ],
             routerMvcAdapter(controlador(), EMVC.SHOW)
         );
         routes.post(
