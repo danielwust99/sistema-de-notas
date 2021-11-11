@@ -47,7 +47,7 @@ describe("Project Controller", () => {
     });
 
     describe("Store", () => {
-        test("should return code 500 when throw any exception", async () => {
+        test("Deve retornar codigo 500 em qualquer excessao", async () => {
             jest.spyOn(NotesRepository.prototype, "create").mockRejectedValue(
                 new Error()
             );
@@ -58,7 +58,7 @@ describe("Project Controller", () => {
             expect(result).toEqual(serverError());
         });
 
-        test("should call NotesRepository when pass correct values", async () => {
+        test("Deve chamar NotesRepository quando passado valores validos", async () => {
             const createSpy = jest.spyOn(NotesRepository.prototype, "create");
             const sut = makeSut();
 
@@ -67,7 +67,7 @@ describe("Project Controller", () => {
             expect(createSpy).toHaveBeenCalledWith(makeRequestStore().body);
         });
 
-        test("should return code 200 when valid data is provided", async () => {
+        test("Deve retornar codigo 200 quando passado valores validos", async () => {
             jest.spyOn(NotesRepository.prototype, "create").mockResolvedValue(
                 makeResult()
             );
@@ -78,7 +78,7 @@ describe("Project Controller", () => {
             expect(result).toEqual(ok(makeResult()));
         });
 
-        test("should call CacheRepository when pass correct values", async () => {
+        test("Deve chamar CacheRepository quando passado valores corretos", async () => {
             jest.spyOn(NotesRepository.prototype, "create").mockResolvedValue(
                 makeResult()
             );
@@ -97,7 +97,7 @@ describe("Project Controller", () => {
     });
 
     describe("Index", () => {
-        test("should return code 500 when throw any exception", async () => {
+        test("Deve retornar codigo 500 em qualquer excessao", async () => {
             jest.spyOn(CacheRepository.prototype, "get").mockRejectedValue(
                 new Error()
             );
@@ -108,7 +108,7 @@ describe("Project Controller", () => {
             expect(result).toEqual(serverError());
         });
 
-        test("should call CacheRepository when pass correct values", async () => {
+        test("Deve chamar CacheRepository quando passado valores corretos", async () => {
             jest.spyOn(NotesRepository.prototype, "getAll").mockResolvedValue([
                 makeResult(),
             ]);
@@ -127,7 +127,7 @@ describe("Project Controller", () => {
             expect(setSpy).toBeTruthy();
         });
 
-        test("should return code 200 when cache has any project", async () => {
+        test("Deve retornar codigo 200 quando cacheado", async () => {
             jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue([
                 makeResult(),
             ]);
@@ -138,7 +138,7 @@ describe("Project Controller", () => {
             expect(result).toEqual(ok([makeResult()]));
         });
 
-        test("should return code if data sis nullable", async () => {
+        test("Deve retornar codigo {;p} se retorno for nulo", async () => {
             jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue(
                 null
             );
@@ -157,7 +157,7 @@ describe("Project Controller", () => {
             expect(result).toEqual({ body: [], statusCode: 200 });
         });
 
-        test("should return code 200 when repository has any project", async () => {
+        test("Deve retornar codigo 200 quando repositorio nao tiver dados", async () => {
             jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue(
                 null
             );
@@ -174,6 +174,6 @@ describe("Project Controller", () => {
     });
 
     describe("show", () => {
-        //tema
+        // to do
     });
 });

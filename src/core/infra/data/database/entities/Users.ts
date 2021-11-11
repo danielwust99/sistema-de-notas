@@ -6,6 +6,8 @@ import {
     BeforeInsert,
     BeforeUpdate,
     PrimaryColumn,
+    ManyToMany,
+    ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Notes } from "./Notes";
@@ -30,7 +32,7 @@ export class Users extends BaseEntity {
     @Column({ name: "updated_at" })
     updatedAt?: Date;
 
-    @OneToMany(_ => Notes, (nota) => nota.usuario)
+    @OneToMany(() => Notes, nota => nota.usuario)
     notas?: Notes[];
 
     constructor(

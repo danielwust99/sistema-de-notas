@@ -27,9 +27,9 @@ export default class NotesRoutes {
         );
         routes.get(
             "/notas/:uid",
-            // [
+            [
             //     middlewareAdapter(new UsersLoginMiddleware()),
-            // ],
+            ],
             routerMvcAdapter(controlador(), EMVC.SHOW)
         );
         routes.post(
