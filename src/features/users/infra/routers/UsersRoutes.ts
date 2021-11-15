@@ -17,7 +17,7 @@ export default class UsersRoutes {
     public init(routes: Router) {
         routes.post(
             "/login",
-            [middlewareAdapter(new LoginInputMiddleware())],
+            // [middlewareAdapter(new LoginInputMiddleware())],
             routerMvcAdapter(controlador(), EMVC.LOGIN)
         );
         routes.post(
@@ -27,16 +27,16 @@ export default class UsersRoutes {
         );
         routes.get(
             "/usuarios/:uid",
-            [
-                middlewareAdapter(new UsersLoginMiddleware()),
-            ],
+            // [
+            //     middlewareAdapter(new UsersLoginMiddleware()),
+            // ],
             routerMvcAdapter(controlador(), EMVC.SHOW)
         );
         routes.put(
             "/usuarios/:uid",
             [
                 middlewareAdapter(new UserInputMiddleware()),
-                middlewareAdapter(new UsersLoginMiddleware()),
+                // middlewareAdapter(new UsersLoginMiddleware()),
             ],
             routerMvcAdapter(controlador(), EMVC.UPDATE)
         );

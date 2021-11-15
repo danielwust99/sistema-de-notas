@@ -1,6 +1,6 @@
 import NotesRepository from "../../../../src/features/notes/infra/repositories/NotesRepositories";
 import Database from "../../../../src/core/infra/data/connections/Database";
-import { Users, Notes } from "../../../../src/core";
+import { Users, Notes, badRequest, InvalidParam } from "../../../../src/core";
 
 jest.mock(
     "../../../../src/features/users/infra/repositories/UsersRepositories.ts"
@@ -10,11 +10,13 @@ jest.mock(
 );
 
 const criarUsuario = async (): Promise<Users> => {
-    return Users.create({
+    const usuario = await Users.create({
         nome: "qualquer_nome",
         usuario: "qualquer_usuario",
         senha: "qualquer_senha",
     }).save();
+
+    return usuario;
 };
 
 const criarNota = async (): Promise<Notes> => {
@@ -38,7 +40,7 @@ describe("REPOSITORIO DE NOTA", () => {
     afterAll(async () => {
         await new Database().closeConnection();
     });
-    describe("CREATE", () => {
+    describe("REPOSITORIO DE NOTAS", () => {
         describe("Salvamento de nota", () => {
             test("Deve criar uma nova nota quando passar parametros corretos", async () => {
                 const dados: any = await criarNota();

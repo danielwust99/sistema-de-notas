@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 export default class NotesRepository {
     async create(dados: Notes): Promise<Notes> {
         const { descricao, detalhamento, usuarioUid } = dados;
+        
         const resultado = new Notes(
             uuid(),
             descricao,

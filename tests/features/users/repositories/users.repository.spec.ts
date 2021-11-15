@@ -21,7 +21,7 @@ describe("REPOSITORIO DE USUARIO", () => {
         await new Database().openConnection();
     });
     beforeEach(async () => {
-        // await Users.clear();
+        await Users.clear();
     });
     afterAll(async () => {
         await new Database().closeConnection();
