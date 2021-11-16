@@ -17,7 +17,7 @@ export default class UsersRoutes {
     public init(routes: Router) {
         routes.post(
             "/login",
-            // [middlewareAdapter(new LoginInputMiddleware())],
+            [middlewareAdapter(new LoginInputMiddleware())],
             routerMvcAdapter(controlador(), EMVC.LOGIN)
         );
         routes.post(

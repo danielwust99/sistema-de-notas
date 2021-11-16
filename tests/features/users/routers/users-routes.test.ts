@@ -1,4 +1,3 @@
-import UsersRepository from "../../../../src/features/users/infra/repositories/UsersRepositories";
 import UsersRoutes from "../../../../src/features/users/infra/routers/UsersRoutes";
 import Database from "../../../../src/core/infra/data/connections/Database";
 import App from "../../../../src/core/presentation/App";
@@ -9,11 +8,13 @@ import request from "supertest";
 jest.mock("ioredis");
 
 const criarUsuario = async (): Promise<Users> => {
-    return Users.create({
+    const usuario = Users.create({
         nome: "qualquer_nome",
         usuario: "qualquer_usuario",
         senha: "qualquer_senha",
     }).save();
+
+    return await usuario;
 };
 
 describe("Rotas dos Usuarios", () => {
@@ -102,6 +103,40 @@ describe("Rotas dos Usuarios", () => {
                     nome: "",
                 })
                 .expect(400, { error: "Erro: dados invalidos" });
+        });
+    });
+
+    describe("LOGIN - usuarios", () => {
+        test("Deve retornar codigo 200 com o token se usuario for valido", async () => {
+            await criarUsuario();
+            await request(server)
+                .post(`/login`)
+                .send({
+                    usuario: "qualquer_usuario",
+                    senha: "qualquer_senha",
+                })
+                .expect(200)
+        });
+
+        test("Deve retornar codigo 400 se dados estiverem incorretos", async () => {
+            await criarUsuario();
+            await request(server)
+                .post(`/login`)
+                .send({
+                    usuario: "",
+                    senha: "",
+                })
+                .expect(400, { error: "Erro: dados invalidos" });
+        });
+
+        test("Deve retornar codigo 404 se usuario nao existir", async () => {
+            await request(server)
+                .post(`/login`)
+                .send({
+                    usuario: "usuario_nao_existe",
+                    senha: "qualquer_senha",
+                })
+                .expect(404);
         });
     });
 });
