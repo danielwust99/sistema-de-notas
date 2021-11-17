@@ -1,6 +1,6 @@
 import NotesRepository from "../../../../src/features/notes/infra/repositories/NotesRepositories";
 import Database from "../../../../src/core/infra/data/connections/Database";
-import { Users, Notes, badRequest, InvalidParam } from "../../../../src/core";
+import { Users, Notes } from "../../../../src/core";
 
 jest.mock(
     "../../../../src/features/users/infra/repositories/UsersRepositories.ts"

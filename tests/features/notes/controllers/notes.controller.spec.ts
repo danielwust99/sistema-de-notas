@@ -1,6 +1,6 @@
 import NotesRepository from "../../../../src/features/notes/infra/repositories/NotesRepositories";
 import NotesController from "../../../../src/features/notes/controllers/NotesController";
-import { HttpRequest, serverError, notFound, badRequest, ok, InvalidParam } from "../../../../src/core";
+import { HttpRequest, serverError, ok } from "../../../../src/core";
 import { CacheRepository } from "../../../../src/core";
 
 jest.mock(
@@ -49,13 +49,13 @@ describe("Controller das notas", () => {
 
     describe("Criação de nota", () => {
         test("Deve chamar NotesController quando passado valores validos", async () => {
-            const createSpy = jest.spyOn(NotesRepository.prototype, "create");
+            const teste = jest.spyOn(NotesRepository.prototype, "create");
             const sistema = criarController();
 
             const resultado = await sistema.store(requestComBody());
 
-            expect(createSpy).toHaveBeenCalled();
-            expect(createSpy).toHaveBeenCalledWith(requestComBody().body);
+            expect(teste).toHaveBeenCalled();
+            expect(teste).toHaveBeenCalledWith(requestComBody().body);
             expect(resultado.statusCode).toBe(200);
         });
 
@@ -64,9 +64,10 @@ describe("Controller das notas", () => {
             .mockResolvedValue(criarNota());
 
             const sistema = criarController();
-            const result = await sistema.store(requestComBody());
+            const resultado = await sistema.store(requestComBody());
 
-            expect(result).toEqual(ok(criarNota()));
+            expect(resultado).toEqual(ok(criarNota()));
+            expect(resultado.statusCode).toBe(200);
         });
 
         test("Deve retornar codigo 500 em qualquer excessao", async () => {
@@ -74,19 +75,9 @@ describe("Controller das notas", () => {
             .mockRejectedValue(new Error());
 
             const sistema = criarController();
-            const result = await sistema.store(requestComBody());
+            const resultado = await sistema.store(requestComBody());
 
-            expect(result).toEqual(serverError());
-        });
-
-        test("Deve retornar codigo 500 em qualquer excessao", async () => {
-            jest.spyOn(NotesRepository.prototype, "create")
-            .mockRejectedValue(new Error());
-
-            const sistema = criarController();
-            const result = await sistema.store(requestComBody());
-
-            expect(result).toEqual(serverError());
+            expect(resultado).toEqual(serverError());
         });
     });
 
@@ -96,9 +87,9 @@ describe("Controller das notas", () => {
             .mockRejectedValue(new Error());
 
             const sistema = criarController();
-            const result = await sistema.index(requestSemDados());
+            const resultado = await sistema.index(requestSemDados());
 
-            expect(result).toEqual(serverError());
+            expect(resultado).toEqual(serverError());
         });
 
         test("Deve retornar codigo {;p} se retorno for nulo", async () => {
@@ -108,12 +99,12 @@ describe("Controller das notas", () => {
             .mockResolvedValue([]);
 
             const sistema = criarController();
-            const result = await sistema.index({
+            const resultado = await sistema.index({
                 body: {},
                 params: {},
             });
 
-            expect(result).toEqual({ body: [], statusCode: 200 });
+            expect(resultado).toEqual({ body: [], statusCode: 200 });
         });
 
         test("Deve retornar codigo 200 quando repositorio nao tiver dados", async () => {
@@ -121,9 +112,9 @@ describe("Controller das notas", () => {
             jest.spyOn(NotesRepository.prototype, "getAll").mockResolvedValue([criarNota()]);
 
             const sistema = criarController();
-            const result = await sistema.index(requestComBody());
+            const resultado = await sistema.index(requestComBody());
 
-            expect(result).toEqual(ok([criarNota()]));
+            expect(resultado).toEqual(ok([criarNota()]));
         });
     });
 
