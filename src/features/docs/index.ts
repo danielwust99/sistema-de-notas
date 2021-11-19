@@ -1,23 +1,43 @@
-import { userPath, usersPath } from './docs/users.path';
-import { userSchema } from './schemas/user.schema';
+import * as docs from "./docs";
+import { userSchema, noteSchema, loginSchema } from "./schemas";
 
 export default {
     info: {
-        title: 'Sistema de Notas',
-        description: 'Documentação da API',
-        version: '3.2.1'
+        title: "Sistema de Notas",
+        description: "Documentação da API",
+        version: "3.2.1",
     },
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     servers: [
         {
-            url: '/'
-        }
+            url: "http://localhost:8080",
+        },
+        {
+            url: "https://sistema-de-notas-back.herokuapp.com",
+        },
     ],
-    paths: {
-        '/user': usersPath,
-        '/user/{id}': userPath
-    },
+    paths: Object.assign(
+        {},
+        {
+            "/login": docs.loginPath,
+            "/notas/{uid}/todas": docs.notesGetAll,
+        },
+        {
+            "/usuarios": docs.usersPost,
+            "/usuarios/{uid}/get": docs.usersGet,
+            "/usuarios/{uid}/put": docs.usersPut,
+            "/usuarios/{uid}/del": docs.usersDel,
+        },
+        {
+            "/notas": docs.notesPost,
+            "/notas/{uid}/put": docs.notesPut,
+            "/notas/{uid}/del": docs.notesGet,
+            "/notas/{uid}/{limpar}": docs.notesGet,
+        }
+    ),
     schemas: {
-        user: userSchema
-    }
-}
+        login: loginSchema,
+        user: userSchema,
+        note: noteSchema,
+    },
+};
