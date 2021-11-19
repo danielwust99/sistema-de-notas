@@ -2,5 +2,5 @@
 /src/features/debug/
 .env
 .vscode
-testedb.sql
+testedb.sqlite
 todo.md

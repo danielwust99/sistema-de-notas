@@ -3,7 +3,13 @@ import UsersController from "../../../../src/features/users/controllers/UsersCon
 import UsersRepository from "../../../../src/features/users/infra/repositories/UsersRepositories";
 
 jest.mock("../../../../src/features/users/controllers/UsersController.ts");
-jest.mock("../../../../src/features/users/infra/repositories/UsersRepositories.ts");
+jest.mock(
+    "../../../../src/features/users/infra/repositories/UsersRepositories.ts"
+);
+
+const criarCRUD = (): UsersController => {
+    return new UsersController(new UsersRepository());
+};
 
 const salvarUsuario = (): HttpRequest => ({
     body: {
@@ -16,19 +22,25 @@ const salvarUsuario = (): HttpRequest => ({
     params: {},
 });
 
-const criarCRUD = (): UsersController => {
-    return new UsersController(new UsersRepository());
-};
+const atualizarUsuario = (): HttpRequest => ({
+    body: {
+        nome: "qualquer_nome",
+        usuario: "qualquer_usuario",
+        senha: "qualquer_senha",
+    },
+    params: { uid: "qualquer_uid" },
+});
 
 const mostrarUsuario = (): HttpRequest => ({
     body: {},
     params: { uid: "qualquer_uid" },
 });
 
-const buscarUsuario = (): any => ({
-    uid: "qualquer_uid",
-    usuario: "qualquer_nome",
-});
+const usuarioModelo = {
+    nome: "qualquer_nome",
+    usuario: "qualquer_usuario",
+    senha: "qualquer_senha",
+};
 
 describe("User Controller", () => {
     beforeEach(() => {
@@ -37,24 +49,39 @@ describe("User Controller", () => {
 
     describe("Salvamento", () => {
         test("Deve chamar UsersController ao passar valores corretos", async () => {
-            const createSpy = jest.spyOn(UsersController.prototype, "store");
+            const sut = criarCRUD();
+            const teste = jest.spyOn(UsersController.prototype, "store");
+
+            await sut.store(salvarUsuario().body);
+
+            expect(teste).toHaveBeenCalledWith(salvarUsuario().body);
+        });
+
+        test("Deve retornar codigo 200 quando sao passados dados validos", async () => {
+            const sut = criarCRUD();
+            const teste = jest
+                .spyOn(UsersController.prototype, "store")
+                .mockResolvedValue(salvarUsuario().body);
+
+            await sut.store(salvarUsuario().body);
+
+            expect(teste).toHaveBeenCalledWith(salvarUsuario().body);
+        });
+    });
+
+    describe("Atualização", () => {
+        test("Deve atualizar quando sao passados dados validos", async () => {
             const sut = criarCRUD();
 
             await sut.store(salvarUsuario().body);
 
-            expect(createSpy).toHaveBeenCalledWith(salvarUsuario().body);
-        });
+            const oldSpy = jest
+                .spyOn(UsersController.prototype, "update")
+                .mockResolvedValue(salvarUsuario().body);
 
-        test("Deve retornar codigo 200 quando sao passados dados validos", async () => {
-            jest.spyOn(UsersController.prototype, "store").mockResolvedValue(
-                buscarUsuario()
-            );
+            await sut.update(atualizarUsuario());
 
-            const sut = criarCRUD();
-            const result = await sut.store(salvarUsuario().body);
-
-            expect(result).toBeTruthy();
-            // expect(result).toEqual(ok(buscarUsuario()));
+            expect(oldSpy).toHaveBeenCalledWith(atualizarUsuario());
         });
     });
 });

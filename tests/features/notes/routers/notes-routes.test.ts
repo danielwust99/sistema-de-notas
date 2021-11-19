@@ -10,22 +10,22 @@ jest.mock("ioredis");
 
 const criarUsuario = async (): Promise<Users> => {
     return Users.create({
-        nome: "any_nome",
-        usuario: "any_usuario",
-        senha: "any_senha",
+        nome: "qualquer_nome",
+        usuario: "qualquer_usuario",
+        senha: "qualquer_senha",
     }).save();
 };
 
 const criarNota = async (): Promise<Notes> => {
     const usuario = await criarUsuario();
     return Notes.create({
-        detalhamento: "any_detalhamento",
-        descricao: "any_descricao",
+        detalhamento: "qualquer_detalhamento",
+        descricao: "qualquer_descricao",
         usuarioUid: usuario.uid,
     }).save();
 };
 
-describe("Rotas de Usuario", () => {
+describe("Rotas das Notas", () => {
     const server = new App().server;
 
     beforeEach(async () => {
@@ -48,32 +48,6 @@ describe("Rotas de Usuario", () => {
 
     afterAll(async () => {
         await new Database().closeConnection();
-    });
-
-    describe("POST - Notas", () => {
-        test("Deve retornar codigo 400 ao salvar uma nota com invalido detalhamento", async () => {
-            const usuario = await criarUsuario();
-
-            await request(server)
-                .post("/notas")
-                .send({
-                    detalhamento: "",
-                    descricao: "any_descricao",
-                    usuarioUid: usuario.uid,
-                })
-                .expect(400, { error: "Erro: dados invalidos" });
-        });
-
-        test("Deve retornar codigo 404 com usuario invalido", async () => {
-            await request(server)
-                .post("/notas")
-                .send({
-                    detalhamento: "any_name",
-                    descricao: "any_descricao",
-                    usuarioUid: 'id_inexistente',
-                })
-                .expect(404)
-        });
     });
 
     describe("GET - Notas", () => {
@@ -106,6 +80,32 @@ describe("Rotas de Usuario", () => {
                 .expect((request) => {
                     expect(request.body.usuarioUid).toEqual(nota.usuarioUid);
                 });
+        });
+    });
+
+    describe("POST - Notas", () => {
+        test("Deve retornar codigo 400 ao salvar uma nota com invalido detalhamento", async () => {
+            const usuario = await criarUsuario();
+
+            await request(server)
+                .post("/notas")
+                .send({
+                    detalhamento: "",
+                    descricao: "qualquer_descricao",
+                    usuarioUid: usuario.uid,
+                })
+                .expect(400, { error: "Erro: dados invalidos" });
+        });
+
+        test("Deve retornar codigo 404 com usuario invalido", async () => {
+            await request(server)
+                .post("/notas")
+                .send({
+                    detalhamento: "qualquer_name",
+                    descricao: "qualquer_descricao",
+                    usuarioUid: 'id_inexistente',
+                })
+                .expect(404)
         });
     });
 });
