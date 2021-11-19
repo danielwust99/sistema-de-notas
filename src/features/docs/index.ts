@@ -5,9 +5,9 @@ export default {
     info: {
         title: 'Sistema de Notas',
         description: 'Documentação da API',
-        version: '3.1.0'
+        version: '3.2.1'
     },
-    openapi: '3.1.0',
+    openapi: '3.0.0',
     servers: [
         {
             url: '/'
