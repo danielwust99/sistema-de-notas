@@ -1,7 +1,10 @@
-import UsersRoutes from "../../features/users/infra/routers/UsersRoutes";
-import NotesRoutes from "../../features/notes/infra/routers/NotesRoutes";
 import express, { Router, Request, Response } from "express";
 import cors from "cors";
+
+import UsersRoutes from "../../features/users/infra/routers/UsersRoutes";
+import NotesRoutes from "../../features/notes/infra/routers/NotesRoutes";
+
+import setupSwagger from "../../config-swagger";
 
 export default class App {
     readonly #express: express.Application;
@@ -39,6 +42,8 @@ export default class App {
         routers.get("/", (_: Request, res: Response) =>
             res.send("API RODANDO")
         );
+
+        setupSwagger(this.#express);
 
         new UsersRoutes().init(routers);
         new NotesRoutes().init(routers);
