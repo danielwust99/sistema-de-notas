@@ -1,179 +1,176 @@
 import NotesRepository from "../../../../src/features/notes/infra/repositories/NotesRepositories";
 import NotesController from "../../../../src/features/notes/controllers/NotesController";
-import { HttpRequest, serverError, notFound, ok } from "../../../../src/core";
+import { HttpRequest, serverError, ok } from "../../../../src/core";
 import { CacheRepository } from "../../../../src/core";
-import { Users, Notes } from "../../../../src/core";
 
-jest.mock("../../../../src/features/notes/infra/repositories/NotesRepositories.ts");
+jest.mock(
+    "../../../../src/features/notes/infra/repositories/NotesRepositories.ts"
+);
 jest.mock("../../../../src/core/infra/data/repositories/cache.repository.ts");
 
-const makeRequestStore = (): HttpRequest => ({
+const requestComBody = (): HttpRequest => ({
     body: {
-        detalhamento: "any_name",
-        descricao: "any_description",
-        usuarioUid: "any_uid",
+        detalhamento: "qualquer_nome",
+        descricao: "qualquer_descricao",
+        usuarioUid: "qualquer_uid",
     },
     params: {},
 });
 
-const makeRequestFalse = (): HttpRequest => ({
+const requestInvalida = (): HttpRequest => ({
     body: {
-        detalhamento: "any_name",
-        descricao: "any_description",
+        detalhamento: "qualquer_nome",
+        descricao: "qualquer_descricao",
         usuarioUid: "",
     },
     params: {},
 });
 
-const makeRequestShow = (): HttpRequest => ({
+const requestSemDados = (): HttpRequest => ({
     body: {},
-    params: { uid: "any_uid" },
+    params: { uid: "qualquer_uid" },
 });
 
-const makeResult = (): any => ({
-    descricao: "any_uid",
-    detalhamento: "any_name",
-    usuarioUid: "any_uid",
+const criarNota = (): any => ({
+    descricao: "qualquer_uid",
+    detalhamento: "qualquer_nome",
+    usuarioUid: "qualquer_uid",
 });
 
-// SUT = System under test
-const makeSut = (): NotesController => {
+// sistema = System under test
+const criarController = (): NotesController => {
     return new NotesController(new NotesRepository(), new CacheRepository());
 };
 
-describe("Project Controller", () => {
+describe("Controller das notas", () => {
     beforeEach(() => {
         jest.resetAllMocks();
     });
 
-    describe("Store", () => {
-        test("should return code 500 when throw any exception", async () => {
-            jest.spyOn(NotesRepository.prototype, "create").mockRejectedValue(
-                new Error()
-            );
+    describe("Criação de nota", () => {
+        test("Deve chamar NotesController quando passado valores validos", async () => {
+            const teste = jest.spyOn(NotesRepository.prototype, "create");
+            const sistema = criarController();
 
-            const sut = makeSut();
-            const result = await sut.store(makeRequestStore());
+            const resultado = await sistema.store(requestComBody());
 
-            expect(result).toEqual(serverError());
+            expect(teste).toHaveBeenCalled();
+            expect(teste).toHaveBeenCalledWith(requestComBody().body);
+            expect(resultado.statusCode).toBe(200);
         });
 
-        test("should call NotesRepository when pass correct values", async () => {
-            const createSpy = jest.spyOn(NotesRepository.prototype, "create");
-            const sut = makeSut();
+        test("Deve retornar codigo 200 quando passado valores validos", async () => {
+            jest.spyOn(NotesRepository.prototype, "create")
+            .mockResolvedValue(criarNota());
 
-            await sut.store(makeRequestStore());
+            const sistema = criarController();
+            const resultado = await sistema.store(requestComBody());
 
-            expect(createSpy).toHaveBeenCalledWith(makeRequestStore().body);
+            expect(resultado).toEqual(ok(criarNota()));
+            expect(resultado.statusCode).toBe(200);
         });
 
-        test("should return code 200 when valid data is provided", async () => {
-            jest.spyOn(NotesRepository.prototype, "create").mockResolvedValue(
-                makeResult()
-            );
+        test("Deve retornar codigo 500 em qualquer excessao", async () => {
+            jest.spyOn(NotesRepository.prototype, "create")
+            .mockRejectedValue(new Error());
 
-            const sut = makeSut();
-            const result = await sut.store(makeRequestStore());
+            const sistema = criarController();
+            const resultado = await sistema.store(requestComBody());
 
-            expect(result).toEqual(ok(makeResult()));
-        });
-
-        test("should call CacheRepository when pass correct values", async () => {
-            jest.spyOn(NotesRepository.prototype, "create").mockResolvedValue(
-                makeResult()
-            );
-
-            const setSpy = jest.spyOn(CacheRepository.prototype, "set");
-            const delSpy = jest.spyOn(CacheRepository.prototype, "del");
-
-            // SUT = System under test = o que está sendo testado
-            const sut = makeSut();
-            await sut.store(makeRequestStore());
-
-            expect(setSpy).toHaveBeenCalledWith("nota:any_uid", makeResult());
-
-            expect(delSpy).toHaveBeenCalledWith("notas:any_uid");
+            expect(resultado).toEqual(serverError());
         });
     });
 
-    describe("Index", () => {
-        test("should return code 500 when throw any exception", async () => {
-            jest.spyOn(CacheRepository.prototype, "get").mockRejectedValue(
-                new Error()
-            );
+    describe("Obter nota", () => {
+        test("Deve retornar codigo 500 em qualquer excessao", async () => {
+            jest.spyOn(CacheRepository.prototype, "get")
+            .mockRejectedValue(new Error());
 
-            const sut = makeSut();
-            const result = await sut.index(makeRequestShow());
+            const sistema = criarController();
+            const resultado = await sistema.index(requestSemDados());
 
-            expect(result).toEqual(serverError());
+            expect(resultado).toEqual(serverError());
         });
 
-        test("should call CacheRepository when pass correct values", async () => {
-            jest.spyOn(NotesRepository.prototype, "getAll").mockResolvedValue([
-                makeResult(),
-            ]);
+        test("Deve retornar codigo {;p} se retorno for nulo", async () => {
+            jest.spyOn(CacheRepository.prototype, "get")
+            .mockResolvedValue(null);
+            jest.spyOn(NotesRepository.prototype, "getAll")
+            .mockResolvedValue([]);
 
-            const getSpy = jest
-                .spyOn(CacheRepository.prototype, "get")
-                .mockResolvedValue(null);
-            const setSpy = jest
-                .spyOn(CacheRepository.prototype, "set")
-                .mockResolvedValue(null);
-
-            const sut = makeSut();
-            await sut.index(makeRequestStore());
-
-            expect(getSpy).toBeTruthy();
-            expect(setSpy).toBeTruthy();
-        });
-
-        test("should return code 200 when cache has any project", async () => {
-            jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue([
-                makeResult(),
-            ]);
-
-            const sut = makeSut();
-            const result = await sut.index(makeRequestStore());
-
-            expect(result).toEqual(ok([makeResult()]));
-        });
-
-        test("should return code if data sis nullable", async () => {
-            jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue(
-                null
-            );
-            jest.spyOn(NotesRepository.prototype, "getAll").mockResolvedValue(
-                []
-            );
-
-            const sut = makeSut();
-            const result = await sut.index({
+            const sistema = criarController();
+            const resultado = await sistema.index({
                 body: {},
                 params: {},
             });
 
-            console.log(result);
-
-            expect(result).toEqual({ body: [], statusCode: 200 });
+            expect(resultado).toEqual({ body: [], statusCode: 200 });
         });
 
-        test("should return code 200 when repository has any project", async () => {
-            jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue(
-                null
-            );
+        test("Deve retornar codigo 200 quando repositorio nao tiver dados", async () => {
+            jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue(null);
+            jest.spyOn(NotesRepository.prototype, "getAll").mockResolvedValue([criarNota()]);
 
-            jest.spyOn(NotesRepository.prototype, "getAll").mockResolvedValue([
-                makeResult(),
-            ]);
+            const sistema = criarController();
+            const resultado = await sistema.index(requestComBody());
 
-            const sut = makeSut();
-            const result = await sut.index(makeRequestStore());
-
-            expect(result).toEqual(ok([makeResult()]));
+            expect(resultado).toEqual(ok([criarNota()]));
         });
     });
 
-    describe("show", () => {
-        //tema
+    describe("Teste de cache", () => {
+        test("Deve chamar CacheRepository criando a nota", async () => {
+            jest.spyOn(NotesRepository.prototype, "create").mockResolvedValue(criarNota());
+
+            const setSpy = jest.spyOn(CacheRepository.prototype, "set");
+            const delSpy = jest.spyOn(CacheRepository.prototype, "del");
+
+            const sistema = criarController();
+            await sistema.store(requestComBody());
+
+            expect(setSpy).toHaveBeenCalledWith(
+                "nota:qualquer_uid",
+                criarNota()
+            );
+            expect(delSpy).toHaveBeenCalledWith("notas:qualquer_uid");
+        });
+
+        test("Deve chamar CacheRepository quando passado valores corretos", async () => {
+            jest.spyOn(NotesRepository.prototype, "getOne")
+            .mockResolvedValue(criarNota());
+
+            const getSpy = jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue(null);
+            const setSpy = jest.spyOn(CacheRepository.prototype, "set").mockResolvedValue(null);
+
+            const sistema = criarController();
+            await sistema.index(requestComBody());
+
+            expect(getSpy).toBeTruthy();
+            expect(setSpy).toBeTruthy();
+        });
+        test("Deve retornar codigo 200 quando cacheado", async () => {
+            jest.spyOn(CacheRepository.prototype, "get").mockResolvedValue([criarNota()]);
+
+            const sistema = criarController();
+            const result = await sistema.index(requestComBody());
+
+            expect(result).toEqual(ok([criarNota()]));
+        });
     });
 });
+
+
+// create 
+
+/*
+test("Deve retornar codigo 400 quando passado valores invalidos", async () => {
+    jest.spyOn(NotesRepository.prototype, "create")
+    // .mockRejectedValue(new InvalidParam("dados invalidos"));
+    .mockRejectedValue(badRequest(new InvalidParam("dados invalidos")));
+
+    const sistema = criarController();
+    const result = await sistema.store(requestSemDados());
+
+    expect(result).toEqual(badRequest(new InvalidParam("dados invalidos")));
+});
+*/

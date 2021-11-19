@@ -48,8 +48,9 @@ export class CreateTableNotes1625009317656 implements MigrationInterface {
                 foreignKeys: [
                     new TableForeignKey({
                         columnNames: ["usuario_uid"],
-                        referencedColumnNames: ["uid"],
                         referencedTableName: "usuarios",
+                        referencedColumnNames: ["uid"],
+                        name: "vinculo_de_proprietario",
                     }),
                 ],
             })
