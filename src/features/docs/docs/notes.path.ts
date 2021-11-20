@@ -30,6 +30,26 @@ export const notesGet = {
                     },
                 },
             },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
         },
     },
     put: {
@@ -55,6 +75,26 @@ export const notesGet = {
                     },
                 },
             },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
         },
     },
     
@@ -63,7 +103,16 @@ export const notesGet = {
         summary: "Deletar",
         parameters: [],
         responses: {
-            204: true,
+            204: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/delete",
+                        },
+                    },
+                },
+            },
         },
     },
 };
@@ -106,6 +155,26 @@ export const notesPost = {
                     },
                 },
             },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
         },
     },
 };
@@ -139,12 +208,22 @@ export const getAll = {
 };
 
 export const deleteAll = {
+    
     delete: {
         tags: ["Notas"],
         summary: "Limpar",
         parameters: [],
         responses: {
-            204: true,
+            204: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/delete",
+                        },
+                    },
+                },
+            },
         },
     },
 };

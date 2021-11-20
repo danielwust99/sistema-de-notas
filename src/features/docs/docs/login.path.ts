@@ -40,7 +40,7 @@ export const loginPath = {
                 },
             },
             404: {
-                description: "Caso de inexistentes",
+                description: "Caso de usuario inexistentes",
                 content: {
                     "application/json": {
                         schema: {

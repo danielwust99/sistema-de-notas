@@ -22,13 +22,33 @@ export const usersGet = {
         responses: {
             200: {
                 links: {
-                    href: "/notas/{uid}"
+                    href: "/notas/{uid}",
                 },
                 description: "Caso de sucesso",
                 content: {
                     "application/json": {
                         schema: {
                             $ref: "#/schemas/user",
+                        },
+                    },
+                },
+            },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
                         },
                     },
                 },
@@ -58,6 +78,26 @@ export const usersGet = {
                     },
                 },
             },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
         },
     },
     delete: {
@@ -65,7 +105,16 @@ export const usersGet = {
         summary: "Deletar",
         parameters: [],
         responses: {
-            204: true,
+            204: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/delete",
+                        },
+                    },
+                },
+            },
         },
     },
 };
@@ -90,6 +139,26 @@ export const usersPost = {
                     "application/json": {
                         schema: {
                             $ref: "#/schemas/user",
+                        },
+                    },
+                },
+            },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/generic",
                         },
                     },
                 },
