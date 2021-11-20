@@ -29,6 +29,7 @@ export default {
         user: sc.userSchema,
         note: sc.noteSchema,
         delete: sc.deleteSchema,
+        userCreate: sc.userCreateSchema,
         // ERRORS
         generic: sc.genericErrorSchema,
         400: sc.invalidDataSchema,

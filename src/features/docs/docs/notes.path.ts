@@ -16,7 +16,7 @@ export const notesGet = {
                 name: "uid",
                 type: "uuid",
                 required: true,
-                description: "UID do usuário",
+                description: "uid do usuario",
             },
         ],
         responses: {
@@ -61,7 +61,7 @@ export const notesGet = {
                 name: "uid",
                 type: "uuid",
                 required: true,
-                description: "UID do usuário",
+                description: "uid do usuario",
             },
         ],
         responses: {
@@ -189,7 +189,7 @@ export const getAll = {
                 name: "uid",
                 type: "uuid",
                 required: true,
-                description: "UID do usuário",
+                description: "uid do usuario",
             },
         ],
         responses: {

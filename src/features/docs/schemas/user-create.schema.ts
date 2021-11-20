@@ -1,10 +1,6 @@
-export const userSchema = {
+export const userCreateSchema = {
     type: 'object',
     properties: {
-        uid: {
-            type: 'string',
-            summary: 'uid do usuario'
-        },
         nome: {
             type: 'string',
             summary: 'Nome do usuario'
@@ -12,6 +8,10 @@ export const userSchema = {
         usuario: {
             type: 'string',
             summary: 'Login do usuario'
+        },
+        senha: {
+            type: 'string',
+            summary: 'senha do usuario'
         },
     }
 }

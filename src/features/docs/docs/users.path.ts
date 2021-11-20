@@ -14,7 +14,7 @@ export const usersGet = {
             {
                 name: "uid",
                 in: "path",
-                description: "UID do usuário",
+                description: "uid do usuario",
                 required: true,
                 type: "uuid",
             },
@@ -62,7 +62,7 @@ export const usersGet = {
             {
                 name: "uid",
                 in: "path",
-                description: "UID do usuário",
+                description: "uid do usuario",
                 required: true,
                 type: "uuid",
             },
@@ -123,15 +123,42 @@ export const usersPost = {
     post: {
         tags: ["Usuarios"],
         summary: "Criar",
+        "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Corpo da requisição com os dados necessarios",
+              "required": false,
+              "schema": {
+                "$ref": "#/schemas/userCreate"
+              }
+            }
+          ],      
+        /*
         parameters: [
             {
-                name: "uid",
                 in: "path",
-                description: "UID do usuário",
+                type: "string",
                 required: true,
-                type: "uuid",
+                name: "nome",
+                description: "nome do usuario",
             },
+            {
+                in: "path",
+                type: "string",
+                required: true,
+                name: "usuario",
+                description: "usuario para login",
+            },
+            {
+                in: "path",
+                name: "senha",
+                type: "string",
+                required: true,
+                description: "senha da conta",
+            }
         ],
+        */
         responses: {
             200: {
                 description: "Caso de sucesso",

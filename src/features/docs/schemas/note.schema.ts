@@ -7,11 +7,11 @@ export const noteSchema = {
         },
         detalhamento: {
             type: 'string',
-            summary: 'Detalhamento da nota, pode ser um campo bem extenso',
+            summary: 'Detalhamento, pode ser extenso',
         },
         usuarioUID: {
             type: 'string',
-            summary: 'UID do usuario que criou a nota',
+            summary: 'uid do usuario que criou a nota',
         },
         createdAt: {
             type: 'string',
