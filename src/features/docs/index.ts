@@ -28,6 +28,7 @@ export default {
         login: sc.loginSchema,
         user: sc.userSchema,
         note: sc.noteSchema,
+        generic: sc.genericErrorSchema,
         400: sc.invalidDataSchema,
         404: sc.notFoundSchema,
     },

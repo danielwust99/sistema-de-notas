@@ -34,7 +34,7 @@ export const loginPath = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/400",
+                            $ref: "#/schemas/generic",
                         },
                     },
                 },
@@ -44,7 +44,7 @@ export const loginPath = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/404",
+                            $ref: "#/schemas/generic",
                         },
                     },
                 },

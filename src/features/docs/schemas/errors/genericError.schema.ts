@@ -1,4 +1,4 @@
-export const invalidDataSchema = {
+export const genericErrorSchema = {
     type: "object",
     properties: {
         error: {
