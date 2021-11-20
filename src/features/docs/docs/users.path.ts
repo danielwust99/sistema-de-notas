@@ -21,6 +21,9 @@ export const usersGet = {
         ],
         responses: {
             200: {
+                links: {
+                    href: "/notas/{uid}"
+                },
                 description: "Caso de sucesso",
                 content: {
                     "application/json": {

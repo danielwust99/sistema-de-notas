@@ -1,9 +1,9 @@
-export const error404 = {
+export const invalidDataSchema = {
     type: 'object',
     properties: {
         error: {
             type: 'string',
-            summary: 'Erro: Data not Found'
+            summary: 'Erro: dados invalidos'
         },
     }
 }

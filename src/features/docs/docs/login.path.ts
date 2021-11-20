@@ -29,6 +29,26 @@ export const loginPath = {
                     },
                 },
             },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/400",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/404",
+                        },
+                    },
+                },
+            },
         },
     },
 };

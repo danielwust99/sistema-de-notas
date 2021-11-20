@@ -1,5 +1,5 @@
 import * as docs from "./docs";
-import { userSchema, noteSchema, loginSchema } from "./schemas";
+import * as sc from "./schemas";
 
 export default {
     info: {
@@ -25,8 +25,10 @@ export default {
         "/notas/{uid}/{limpar}": docs.deleteAll,
     },
     schemas: {
-        login: loginSchema,
-        user: userSchema,
-        note: noteSchema,
+        login: sc.loginSchema,
+        user: sc.userSchema,
+        note: sc.noteSchema,
+        400: sc.invalidDataSchema,
+        404: sc.notFoundSchema,
     },
 };
