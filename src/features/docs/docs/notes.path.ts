@@ -32,12 +32,9 @@ export const notesGet = {
             },
         },
     },
-};
-
-export const notesGetAll = {
-    get: {
+    put: {
         tags: ["Notas"],
-        summary: "Buscar",
+        summary: "Atualizar",
         parameters: [
             {
                 in: "path",
@@ -58,6 +55,15 @@ export const notesGetAll = {
                     },
                 },
             },
+        },
+    },
+    
+    delete: {
+        tags: ["Notas"],
+        summary: "Deletar",
+        parameters: [],
+        responses: {
+            204: true,
         },
     },
 };
@@ -104,10 +110,10 @@ export const notesPost = {
     },
 };
 
-export const notesPut = {
-    put: {
+export const getAll = {
+    get: {
         tags: ["Notas"],
-        summary: "Atualizar",
+        summary: "Buscar",
         parameters: [
             {
                 in: "path",
@@ -128,6 +134,17 @@ export const notesPut = {
                     },
                 },
             },
+        },
+    },
+};
+
+export const deleteAll = {
+    delete: {
+        tags: ["Notas"],
+        summary: "Limpar",
+        parameters: [],
+        responses: {
+            204: true,
         },
     },
 };

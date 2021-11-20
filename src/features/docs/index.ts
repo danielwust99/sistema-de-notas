@@ -10,31 +10,20 @@ export default {
     openapi: "3.0.0",
     servers: [
         {
-            url: "http://localhost:8080",
+            url: "https://sistema-de-notas-back.herokuapp.com/api",
         },
         {
-            url: "https://sistema-de-notas-back.herokuapp.com",
+            url: "http://localhost:8080/api",
         },
     ],
-    paths: Object.assign(
-        {},
-        {
-            "/login": docs.loginPath,
-            "/notas/{uid}/todas": docs.notesGetAll,
-        },
-        {
-            "/usuarios": docs.usersPost,
-            "/usuarios/{uid}/get": docs.usersGet,
-            "/usuarios/{uid}/put": docs.usersPut,
-            "/usuarios/{uid}/del": docs.usersDel,
-        },
-        {
-            "/notas": docs.notesPost,
-            "/notas/{uid}/put": docs.notesPut,
-            "/notas/{uid}/del": docs.notesGet,
-            "/notas/{uid}/{limpar}": docs.notesGet,
-        }
-    ),
+    paths: {
+        "/login": docs.loginPath,
+        "/usuarios": docs.usersPost,
+        "/usuarios/{uid}": docs.usersGet,
+        "/notas": docs.notesPost,
+        "/notas/{uid}": docs.notesGet,
+        "/notas/{uid}/{limpar}": docs.deleteAll,
+    },
     schemas: {
         login: loginSchema,
         user: userSchema,
