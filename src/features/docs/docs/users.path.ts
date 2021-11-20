@@ -123,17 +123,16 @@ export const usersPost = {
     post: {
         tags: ["Usuarios"],
         summary: "Criar",
-        "parameters": [
+        parameters: [
             {
-              "in": "body",
-              "name": "body",
-              "description": "Corpo da requisição com os dados necessarios",
-              "required": false,
-              "schema": {
-                "$ref": "#/schemas/userCreate"
-              }
-            }
-          ],
+                in: "body",
+                name: "body",
+                description: "Corpo da requisição com os dados necessarios",
+                schema: {
+                    $ref: "#/schemas/userCreate",
+                },
+            },
+        ],
         responses: {
             200: {
                 description: "Caso de sucesso",
@@ -166,8 +165,8 @@ export const usersPost = {
                 },
             },
             405: {
-              description: "Validation exception"
-            }
+                description: "Validation exception",
+            },
         },
     },
 };

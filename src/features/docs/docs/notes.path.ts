@@ -123,25 +123,12 @@ export const notesPost = {
         summary: "Criar",
         parameters: [
             {
-                in: "path",
-                type: "string",
-                required: true,
-                name: "descricao",
-                description: "descricao da nota",
-            },
-            {
-                in: "path",
-                type: "string",
-                required: true,
-                name: "detalhamento",
-                description: "detalhamento da nota",
-            },
-            {
-                in: "path",
-                type: "string",
-                required: true,
-                name: "usuarioUID",
-                description: "proprietario da nota",
+                in: "body",
+                name: "body",
+                description: "Corpo da requisição com os dados necessarios",
+                schema: {
+                    $ref: "#/schemas/noteCreate",
+                },
             },
         ],
         responses: {

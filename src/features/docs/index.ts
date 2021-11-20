@@ -30,6 +30,7 @@ export default {
         note: sc.noteSchema,
         delete: sc.deleteSchema,
         userCreate: sc.userCreateSchema,
+        noteCreate: sc.noteCreateSchema,
         // ERRORS
         generic: sc.genericErrorSchema,
         400: sc.invalidDataSchema,

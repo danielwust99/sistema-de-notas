@@ -4,18 +4,18 @@ export const userCreateSchema = {
     properties: {
         nome: {
             type: "string",
+            example: "Joao da Silva",
             summary: "Nome do usuario",
-            example: "João da Silva",
         },
         usuario: {
             type: "string",
+            example: "joaodasilva",
             summary: "Login do usuario",
-            example: "joaosilva",
         },
         senha: {
             type: "string",
-            summary: "senha do usuario",
             example: "123mudar",
+            summary: "senha do usuario",
         },
     },
 };
