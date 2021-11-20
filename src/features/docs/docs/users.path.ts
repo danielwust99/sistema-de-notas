@@ -133,32 +133,7 @@ export const usersPost = {
                 "$ref": "#/schemas/userCreate"
               }
             }
-          ],      
-        /*
-        parameters: [
-            {
-                in: "path",
-                type: "string",
-                required: true,
-                name: "nome",
-                description: "nome do usuario",
-            },
-            {
-                in: "path",
-                type: "string",
-                required: true,
-                name: "usuario",
-                description: "usuario para login",
-            },
-            {
-                in: "path",
-                name: "senha",
-                type: "string",
-                required: true,
-                description: "senha da conta",
-            }
-        ],
-        */
+          ],
         responses: {
             200: {
                 description: "Caso de sucesso",
@@ -190,6 +165,9 @@ export const usersPost = {
                     },
                 },
             },
+            405: {
+              description: "Validation exception"
+            }
         },
     },
 };
