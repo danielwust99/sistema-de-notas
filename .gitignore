@@ -1,5 +1,6 @@
-/node_modules/
 /src/features/debug/
+/node_modules/
+/out/
 .env
 .vscode
 testedb.sqlite

@@ -1,7 +1,7 @@
 {
     "name": "sistema-de-notas",
     "author": "Daniel Wust",
-    "version": "3.1.0",
+    "version": "3.2.1",
     "main": "server.js",
     "license": "MIT",
     "dependencies": {
@@ -15,6 +15,7 @@
         "pg": "^8.6.0",
         "redis": "^3.1.2",
         "reflect-metadata": "^0.1.13",
+        "swagger-ui-express": "^4.1.6",
         "ts-jest": "^27.0.4",
         "ts-node": "^10.1.0",
         "typeorm": "^0.2.34",
@@ -31,6 +32,7 @@
         "@types/node": "^16.3.3",
         "@types/redis": "^2.8.31",
         "@types/supertest": "^2.0.11",
+        "@types/swagger-ui-express": "^4.1.3",
         "@types/uuid": "^8.3.1",
         "@types/validator": "^13.6.3",
         "jest": "^27.0.6",
