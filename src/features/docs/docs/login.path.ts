@@ -44,6 +44,9 @@ export const loginPath = {
                     },
                 },
             },
+            500: {
+              description: "Internal Server Error"
+            }
         },
     },
 };

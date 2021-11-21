@@ -1,6 +1,6 @@
 export const authSchema = {
     type: "object", // verificar valor certo
-    //required: ["nome", "usuario", "senha"],
+    required: ["usuario", "senha"],
     properties: {
         usuario: {
             type: "string",

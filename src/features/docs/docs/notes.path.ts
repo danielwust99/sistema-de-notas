@@ -162,6 +162,12 @@ export const notesPost = {
                     },
                 },
             },
+            401: {
+              description: "Either the authorization header is missing/badly formed, the token is not valid, or the token is expired, or session service is down.  See response body for more details."
+            },
+            403: {
+              description: "A permission check failed, input was invalid, or an integrity constraint would be violated if the operation were completed.  See response body for more details."
+            },
             404: {
                 description: "Caso de inexistentes",
                 content: {
@@ -172,6 +178,12 @@ export const notesPost = {
                     },
                 },
             },
+            405: {
+                description: "Validation exception",
+            },
+            500: {
+              description: "Internal Server Error"
+            }
         },
     },
 };

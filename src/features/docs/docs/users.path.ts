@@ -177,6 +177,9 @@ export const usersPost = {
             405: {
                 description: "Validation exception",
             },
+            500: {
+              description: "Internal Server Error"
+            }
         },
     },
 };
