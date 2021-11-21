@@ -5,17 +5,17 @@ export const noteCreateSchema = {
         descricao: {
             type: "string",
             example: "Nota 1",
-            summary: "descricao da nota",
+            description: "descricao da nota",
         },
         detalhamento: {
             type: "string",
             example: "Uma nota normal",
-            summary: "detalhamento da nota",
+            description: "detalhamento da nota",
         },
         usuarioUID : {
             type: "string",
             example: "943e2003-adb9-4a47-b32d-3773ba874642",
-            summary: "proprietario da nota",
+            description: "proprietario da nota",
         },
     },
 };

@@ -3,15 +3,15 @@ export const userSchema = {
     properties: {
         uid: {
             type: 'string',
-            summary: 'uid do usuario'
+            description: 'uid do usuario'
         },
         nome: {
             type: 'string',
-            summary: 'Nome do usuario'
+            description: 'Nome do usuario'
         },
         usuario: {
             type: 'string',
-            summary: 'Login do usuario'
+            description: 'Login do usuario'
         },
     }
 }
