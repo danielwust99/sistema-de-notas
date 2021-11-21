@@ -6,6 +6,11 @@ export const loginSchema = {
             description: "uid do usuario",
             example: "943e2003-adb9-4a47-b32d-3773ba874642"
         },
+        nome: {
+            type: "string",
+            example: "Joao",
+            description: "Nome do usuario",
+        },
         usuario: {
             type: "string",
             example: "JoaoDaSilva",

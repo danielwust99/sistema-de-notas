@@ -2,7 +2,15 @@ export const notesPath = {
     get: {
         tags: ["Notas"],
         summary: "Listar",
-        parameters: [],
+        parameters: [
+            {
+                in: "path",
+                name: "uid",
+                type: "string",
+                required: true,
+                description: "uid do usuario",
+            },
+        ],
     },
 };
 
@@ -63,16 +71,19 @@ export const notesGet = {
                 required: true,
                 description: "uid da nota",
             },
-            {
-                in: "body",
-                name: "body",
-                required: true,
-                description: "Corpo da requisição com os dados necessarios",
-                schema: {
-                    $ref: "#/schemas/noteCreate",
+        ],
+        requestBody: {
+            name: "body",
+            required: true,
+            description: "Corpo da requisição com os dados necessarios",
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/schemas/noteCreate",
+                    },
                 },
             },
-        ],
+        },
         responses: {
             200: {
                 description: "Caso de sucesso",
@@ -89,7 +100,7 @@ export const notesGet = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/generic",
+                            $ref: "#/schemas/400",
                         },
                     },
                 },
@@ -99,18 +110,26 @@ export const notesGet = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/generic",
+                            $ref: "#/schemas/404",
                         },
                     },
                 },
             },
         },
     },
-    
+
     delete: {
         tags: ["Notas"],
         summary: "Deletar",
-        parameters: [], // adicionar parametro
+        parameters: [
+            {
+                in: "path",
+                name: "uid",
+                type: "string",
+                required: true,
+                description: "uid do usuario",
+            },
+        ],
         responses: {
             204: {
                 description: "Caso de sucesso",
@@ -130,17 +149,18 @@ export const notesPost = {
     post: {
         tags: ["Notas"],
         summary: "Criar",
-        parameters: [
-            {
-                in: "body",
-                name: "body",
-                required: true,
-                description: "Corpo da requisição com os dados necessarios",
-                schema: {
-                    $ref: "#/schemas/noteCreate",
+        requestBody: {
+            name: "body",
+            required: true,
+            description: "Corpo da requisição com os dados necessarios",
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/schemas/noteCreate",
+                    },
                 },
             },
-        ],
+        },
         responses: {
             200: {
                 description: "Caso de sucesso",
@@ -163,10 +183,12 @@ export const notesPost = {
                 },
             },
             401: {
-              description: "Either the authorization header is missing/badly formed, the token is not valid, or the token is expired, or session service is down.  See response body for more details."
+                description:
+                    "Either the authorization header is missing/badly formed, the token is not valid, or the token is expired, or session service is down.  See response body for more details.",
             },
             403: {
-              description: "A permission check failed, input was invalid, or an integrity constraint would be violated if the operation were completed.  See response body for more details."
+                description:
+                    "A permission check failed, input was invalid, or an integrity constraint would be violated if the operation were completed.  See response body for more details.",
             },
             404: {
                 description: "Caso de inexistentes",
@@ -182,8 +204,8 @@ export const notesPost = {
                 description: "Validation exception",
             },
             500: {
-              description: "Internal Server Error"
-            }
+                description: "Internal Server Error",
+            },
         },
     },
 };
@@ -217,11 +239,18 @@ export const getAll = {
 };
 
 export const deleteAll = {
-    
     delete: {
         tags: ["Notas"],
         summary: "Limpar",
-        parameters: [], // adicionar parametro
+        parameters: [
+            {
+                in: "path",
+                name: "uid",
+                type: "string",
+                required: true,
+                description: "uid do usuario",
+            },
+        ],
         responses: {
             204: {
                 description: "Caso de sucesso",

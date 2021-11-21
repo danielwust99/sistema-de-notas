@@ -2,17 +2,18 @@ export const loginPath = {
     post: {
         tags: ["Autenticação"],
         summary: "Login",
-        parameters: [
-            {
-                in: "body",
-                name: "body",
-                required: true,
-                description: "Corpo com dados de usuario e senha",
-                schema: {
-                    $ref: "#/schemas/auth",
+        requestBody: {
+            name: "body",
+            required: true,
+            description: "Corpo com dados de usuario e senha",
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/schemas/auth",
+                    },
                 },
             },
-        ],
+        },
         responses: {
             200: {
                 description: "Caso de sucesso",
@@ -35,7 +36,7 @@ export const loginPath = {
                 },
             },
             404: {
-                description: "Caso de usuario inexistentes",
+                description: "Caso de inexistentes",
                 content: {
                     "application/json": {
                         schema: {
@@ -45,8 +46,15 @@ export const loginPath = {
                 },
             },
             500: {
-              description: "Internal Server Error"
-            }
+                description: "Erro interno",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/500",
+                        },
+                    },
+                },
+            },
         },
     },
 };

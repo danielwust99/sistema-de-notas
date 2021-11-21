@@ -10,10 +10,12 @@ export default {
     openapi: "3.0.0",
     servers: [
         {
-            url: "https://sistema-de-notas-back.herokuapp.com/api",
+            description: "Servidor local",
+            url: "http://localhost:8080/api",
         },
         {
-            url: "http://localhost:8080/api",
+            description: "Servidor remoto",
+            url: "https://sistema-de-notas-back.herokuapp.com/api",
         },
     ],
     paths: {
@@ -23,6 +25,7 @@ export default {
         // NOTAS
         "/notas": docs.notesPost,
         "/notas/{uid}": docs.notesGet,
+        "/notas/{uid}/todas": docs.notesPath,
         "/notas/{uid}/{limpar}": docs.deleteAll,
     },
     schemas: {
@@ -31,11 +34,25 @@ export default {
         user: sc.userSchema,
         note: sc.noteSchema,
         delete: sc.deleteSchema,
+        deleted: sc.deletedSchema,
         userCreate: sc.userCreateSchema,
         noteCreate: sc.noteCreateSchema,
         // ERRORS
-        generic: sc.genericErrorSchema,
         400: sc.invalidDataSchema,
         404: sc.notFoundSchema,
+        500: sc.internalServerErrorSchema,
+        generic: sc.genericErrorSchema,
+        // TEST
+        test: sc.testSchema,
+    },
+    variables: {
+        username: {
+            default: "daniel",
+            description: "for use on test login",
+        },
+        password: {
+            default: "daniel",
+            description: "for use on test login",
+        },
     },
 };

@@ -38,7 +38,7 @@ export const usersGet = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/generic",
+                            $ref: "#/schemas/400",
                         },
                     },
                 },
@@ -48,7 +48,17 @@ export const usersGet = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/generic",
+                            $ref: "#/schemas/404",
+                        },
+                    },
+                },
+            },
+            500: {
+                description: "Erro interno",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/500",
                         },
                     },
                 },
@@ -66,83 +76,19 @@ export const usersGet = {
                 required: true,
                 description: "uid do usuario",
             },
-            {
-                in: "body",
-                name: "body",
-                required: true,
-                description: "Corpo da requisição com os dados necessarios",
-                schema: {
-                    $ref: "#/schemas/userCreate",
-                },
-            },
         ],
-        responses: {
-            200: {
-                description: "Caso de sucesso",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/user",
-                        },
-                    },
-                },
-            },
-            400: {
-                description: "Caso de dados invalidos",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/generic",
-                        },
-                    },
-                },
-            },
-            404: {
-                description: "Caso de inexistentes",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/generic",
-                        },
+        requestBody: {
+            name: "body",
+            required: true,
+            description: "Corpo da requisição com os dados necessarios",
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/schemas/userCreate",
                     },
                 },
             },
         },
-    },
-    delete: {
-        tags: ["Usuarios"],
-        summary: "Deletar",
-        parameters: [], // precisa de parametros
-        responses: {
-            204: {
-                description: "Caso de sucesso",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/delete",
-                        },
-                    },
-                },
-            },
-        },
-    },
-};
-
-export const usersPost = {
-    post: {
-        tags: ["Usuarios"],
-        summary: "Criar",
-        parameters: [
-            {
-                in: "body",
-                name: "body",
-                required: true,
-                description: "Corpo da requisição com os dados necessarios",
-                schema: {
-                    $ref: "#/schemas/userCreate",
-                },
-            },
-        ],
         responses: {
             200: {
                 description: "Caso de sucesso",
@@ -174,12 +120,125 @@ export const usersPost = {
                     },
                 },
             },
-            405: {
-                description: "Validation exception",
+            500: {
+                description: "Erro interno",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/500",
+                        },
+                    },
+                },
+            },
+        },
+    },
+    delete: {
+        tags: ["Usuarios"],
+        summary: "Deletar",
+        parameters: [
+            {
+                in: "path",
+                name: "uid",
+                type: "string",
+                required: true,
+                description: "uid do usuario",
+            },
+        ],
+        responses: {
+            200: {
+                description: "Caso de sucesso com informação",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/deleted",
+                        },
+                    },
+                },
+            },
+            204: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/delete",
+                        },
+                    },
+                },
+            },
+        },
+    },
+};
+
+export const usersPost = {
+    post: {
+        tags: ["Usuarios"],
+        summary: "Criar",
+        requestBody: {
+            name: "body",
+            required: true,
+            description: "Corpo da requisição com os dados necessarios",
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/schemas/userCreate",
+                    },
+                },
+            },
+        },
+        responses: {
+            200: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/delete",
+                        },
+                    },
+                },
+            },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/400",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/404",
+                        },
+                    },
+                },
             },
             500: {
-              description: "Internal Server Error"
-            }
+                description: "Erro interno",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/500",
+                        },
+                    },
+                },
+            },
+            /*
+            Necessario mudar formato de retorno ao criar usuario
+            200: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/user",
+                        },
+                    },
+                },
+            },
+            */
         },
     },
 };

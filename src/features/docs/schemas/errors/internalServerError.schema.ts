@@ -1,9 +1,9 @@
-export const invalidDataSchema = {
+export const internalServerErrorSchema = {
     type: "object",
     properties: {
         error: {
             type: "string",
-            sumary: "erro: Senha invalida!"
+            sumary: "error: Internar Server Error"
             
         },
     },
