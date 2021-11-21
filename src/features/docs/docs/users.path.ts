@@ -12,11 +12,11 @@ export const usersGet = {
         summary: "Buscar",
         parameters: [
             {
-                name: "uid",
                 in: "path",
-                description: "uid do usuario",
+                name: "uid",
+                type: "string",
                 required: true,
-                type: "uuid",
+                description: "uid do usuario",
             },
         ],
         responses: {
@@ -60,11 +60,20 @@ export const usersGet = {
         summary: "Atualizar",
         parameters: [
             {
-                name: "uid",
                 in: "path",
-                description: "uid do usuario",
+                name: "uid",
+                type: "string",
                 required: true,
-                type: "uuid",
+                description: "uid do usuario",
+            },
+            {
+                in: "body",
+                name: "body",
+                required: true,
+                description: "Corpo da requisição com os dados necessarios",
+                schema: {
+                    $ref: "#/schemas/userCreate",
+                },
             },
         ],
         responses: {
@@ -103,7 +112,7 @@ export const usersGet = {
     delete: {
         tags: ["Usuarios"],
         summary: "Deletar",
-        parameters: [],
+        parameters: [], // precisa de parametros
         responses: {
             204: {
                 description: "Caso de sucesso",
@@ -127,6 +136,7 @@ export const usersPost = {
             {
                 in: "body",
                 name: "body",
+                required: true,
                 description: "Corpo da requisição com os dados necessarios",
                 schema: {
                     $ref: "#/schemas/userCreate",
@@ -149,7 +159,7 @@ export const usersPost = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/generic",
+                            $ref: "#/schemas/400",
                         },
                     },
                 },
@@ -159,7 +169,7 @@ export const usersPost = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/generic",
+                            $ref: "#/schemas/404",
                         },
                     },
                 },

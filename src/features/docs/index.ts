@@ -20,12 +20,14 @@ export default {
         "/login": docs.loginPath,
         "/usuarios": docs.usersPost,
         "/usuarios/{uid}": docs.usersGet,
+        // NOTAS
         "/notas": docs.notesPost,
         "/notas/{uid}": docs.notesGet,
         "/notas/{uid}/{limpar}": docs.deleteAll,
     },
     schemas: {
         login: sc.loginSchema,
+        auth: sc.authSchema,
         user: sc.userSchema,
         note: sc.noteSchema,
         delete: sc.deleteSchema,

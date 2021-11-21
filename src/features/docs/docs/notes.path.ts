@@ -41,7 +41,7 @@ export const notesGet = {
                 },
             },
             404: {
-                description: "Caso de inexistentes",
+                description: "Caso de inexistencia",
                 content: {
                     "application/json": {
                         schema: {
@@ -61,70 +61,12 @@ export const notesGet = {
                 name: "uid",
                 type: "uuid",
                 required: true,
-                description: "uid do usuario",
+                description: "uid da nota",
             },
-        ],
-        responses: {
-            200: {
-                description: "Caso de sucesso",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/note",
-                        },
-                    },
-                },
-            },
-            400: {
-                description: "Caso de dados invalidos",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/generic",
-                        },
-                    },
-                },
-            },
-            404: {
-                description: "Caso de inexistentes",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/generic",
-                        },
-                    },
-                },
-            },
-        },
-    },
-    
-    delete: {
-        tags: ["Notas"],
-        summary: "Deletar",
-        parameters: [],
-        responses: {
-            204: {
-                description: "Caso de sucesso",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/delete",
-                        },
-                    },
-                },
-            },
-        },
-    },
-};
-
-export const notesPost = {
-    post: {
-        tags: ["Notas"],
-        summary: "Criar",
-        parameters: [
             {
                 in: "body",
                 name: "body",
+                required: true,
                 description: "Corpo da requisição com os dados necessarios",
                 schema: {
                     $ref: "#/schemas/noteCreate",
@@ -153,11 +95,79 @@ export const notesPost = {
                 },
             },
             404: {
-                description: "Caso de inexistentes",
+                description: "Caso de inexistencia",
                 content: {
                     "application/json": {
                         schema: {
                             $ref: "#/schemas/generic",
+                        },
+                    },
+                },
+            },
+        },
+    },
+    
+    delete: {
+        tags: ["Notas"],
+        summary: "Deletar",
+        parameters: [], // adicionar parametro
+        responses: {
+            204: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/delete",
+                        },
+                    },
+                },
+            },
+        },
+    },
+};
+
+export const notesPost = {
+    post: {
+        tags: ["Notas"],
+        summary: "Criar",
+        parameters: [
+            {
+                in: "body",
+                name: "body",
+                required: true,
+                description: "Corpo da requisição com os dados necessarios",
+                schema: {
+                    $ref: "#/schemas/noteCreate",
+                },
+            },
+        ],
+        responses: {
+            200: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/note",
+                        },
+                    },
+                },
+            },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/400",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/404",
                         },
                     },
                 },
@@ -199,7 +209,7 @@ export const deleteAll = {
     delete: {
         tags: ["Notas"],
         summary: "Limpar",
-        parameters: [],
+        parameters: [], // adicionar parametro
         responses: {
             204: {
                 description: "Caso de sucesso",

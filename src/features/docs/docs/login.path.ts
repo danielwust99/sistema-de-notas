@@ -4,18 +4,13 @@ export const loginPath = {
         summary: "Login",
         parameters: [
             {
-                in: "path",
-                type: "string",
+                in: "body",
+                name: "body",
                 required: true,
-                name: "usuario",
-                description: "usuario para login",
-            },
-            {
-                in: "path",
-                name: "senha",
-                type: "string",
-                required: true,
-                description: "senha da conta",
+                description: "Corpo com dados de usuario e senha",
+                schema: {
+                    $ref: "#/schemas/auth",
+                },
             },
         ],
         responses: {
@@ -34,7 +29,7 @@ export const loginPath = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/generic",
+                            $ref: "#/schemas/400",
                         },
                     },
                 },
@@ -44,7 +39,7 @@ export const loginPath = {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/schemas/generic",
+                            $ref: "#/schemas/404",
                         },
                     },
                 },
