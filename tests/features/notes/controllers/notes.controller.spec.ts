@@ -158,3 +158,18 @@ describe("Controller das notas", () => {
         });
     });
 });
+
+// create 
+
+/*
+test("Deve retornar codigo 400 quando passado valores invalidos", async () => {
+    jest.spyOn(NotesRepository.prototype, "create")
+    // .mockRejectedValue(new InvalidParam("dados invalidos"));
+    .mockRejectedValue(badRequest(new InvalidParam("dados invalidos")));
+
+    const sistema = criarController();
+    const result = await sistema.store(requestSemDados());
+
+    expect(result).toEqual(badRequest(new InvalidParam("dados invalidos")));
+});
+*/

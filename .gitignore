@@ -3,5 +3,6 @@
 /out/
 .env
 .vscode
+.yarn.lock
 testedb.sqlite
 todo.md
