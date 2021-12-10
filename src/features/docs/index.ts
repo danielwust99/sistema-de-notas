@@ -21,7 +21,7 @@ export default {
     ],
     paths: {
         "/login": d.loginPath,
-        "/usuarios": d.usersPost,
+        "/usuarios": d.usersPath,
         "/usuarios/{uid}": d.usersGet,
         // NOTAS
         "/notas": d.notesPost,

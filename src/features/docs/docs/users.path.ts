@@ -4,6 +4,77 @@ export const usersPath = {
         summary: "Listar",
         parameters: [],
     },
+    post: {
+        tags: ["Usuarios"],
+        summary: "Criar",
+        requestBody: {
+            name: "body",
+            required: true,
+            description: "Corpo da requisição com os dados necessarios",
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/schemas/userCreate",
+                    },
+                },
+            },
+        },
+        responses: {
+            200: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/delete",
+                        },
+                    },
+                },
+            },
+            400: {
+                description: "Caso de dados invalidos",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/400",
+                        },
+                    },
+                },
+            },
+            404: {
+                description: "Caso de inexistentes",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/404",
+                        },
+                    },
+                },
+            },
+            500: {
+                description: "Erro interno",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/500",
+                        },
+                    },
+                },
+            },
+            /*
+            Necessario mudar formato de retorno ao criar usuario
+            200: {
+                description: "Caso de sucesso",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: "#/schemas/user",
+                        },
+                    },
+                },
+            },
+            */
+        },
+    },
 };
 
 export const usersGet = {
@@ -165,80 +236,6 @@ export const usersGet = {
                     },
                 },
             },
-        },
-    },
-};
-
-export const usersPost = {
-    post: {
-        tags: ["Usuarios"],
-        summary: "Criar",
-        requestBody: {
-            name: "body",
-            required: true,
-            description: "Corpo da requisição com os dados necessarios",
-            content: {
-                "application/json": {
-                    schema: {
-                        $ref: "#/schemas/userCreate",
-                    },
-                },
-            },
-        },
-        responses: {
-            200: {
-                description: "Caso de sucesso",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/delete",
-                        },
-                    },
-                },
-            },
-            400: {
-                description: "Caso de dados invalidos",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/400",
-                        },
-                    },
-                },
-            },
-            404: {
-                description: "Caso de inexistentes",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/404",
-                        },
-                    },
-                },
-            },
-            500: {
-                description: "Erro interno",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/500",
-                        },
-                    },
-                },
-            },
-            /*
-            Necessario mudar formato de retorno ao criar usuario
-            200: {
-                description: "Caso de sucesso",
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/schemas/user",
-                        },
-                    },
-                },
-            },
-            */
         },
     },
 };
