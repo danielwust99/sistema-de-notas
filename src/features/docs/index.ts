@@ -1,5 +1,6 @@
-import * as docs from "./docs";
-import * as sc from "./schemas";
+import * as c from "./components";
+import * as s from "./schemas";
+import * as d from "./docs";
 
 export default {
     info: {
@@ -19,31 +20,38 @@ export default {
         },
     ],
     paths: {
-        "/login": docs.loginPath,
-        "/usuarios": docs.usersPost,
-        "/usuarios/{uid}": docs.usersGet,
+        "/login": d.loginPath,
+        "/usuarios": d.usersPost,
+        "/usuarios/{uid}": d.usersGet,
         // NOTAS
-        "/notas": docs.notesPost,
-        "/notas/{uid}": docs.notesGet,
-        "/notas/{uid}/todas": docs.notesPath,
-        "/notas/{uid}/{limpar}": docs.deleteAll,
+        "/notas": d.notesPost,
+        "/notas/{uid}": d.notesGet,
+        "/notas/{uid}/todas": d.notesPath,
+        "/notas/{uid}/{limpar}": d.deleteAll,
     },
     schemas: {
-        login: sc.loginSchema,
-        auth: sc.authSchema,
-        user: sc.userSchema,
-        note: sc.noteSchema,
-        delete: sc.deleteSchema,
-        deleted: sc.deletedSchema,
-        userCreate: sc.userCreateSchema,
-        noteCreate: sc.noteCreateSchema,
+        login: s.loginSchema,
+        auth: s.authSchema,
+        user: s.userSchema,
+        note: s.noteSchema,
+        delete: s.deleteSchema,
+        deleted: s.deletedSchema,
+        userCreate: s.userCreateSchema,
+        noteCreate: s.noteCreateSchema,
         // ERRORS
-        400: sc.invalidDataSchema,
-        404: sc.notFoundSchema,
-        500: sc.internalServerErrorSchema,
-        generic: sc.genericErrorSchema,
+        400: s.invalidDataSchema,
+        404: s.notFoundSchema,
+        500: s.internalServerErrorSchema,
+        generic: s.genericErrorSchema,
         // TEST
-        test: sc.testSchema,
+        test: s.testSchema,
+    },
+    components: {
+      securitySchemes: c.securityComponent,
+      serverError: c.serverErrorComponent,
+      badRequest: c.badRequestComponent,
+      forbidden: c.forbiddenComponent,
+      notFound: c.notFoundComponent,
     },
     variables: {
         username: {
